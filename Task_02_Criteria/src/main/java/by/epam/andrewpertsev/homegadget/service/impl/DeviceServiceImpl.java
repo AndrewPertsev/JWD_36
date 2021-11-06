@@ -14,13 +14,14 @@ public class DeviceServiceImpl implements DeviceServiceIface {
     @Override
     public <E> List<Device> find(Criteria<E> criteria) {
         if (!Validator.criteriaValidator(criteria)) {
-            return null;
+           // throw new  IllegalArgumentException(" Search parameters are incorrect");
+           PrintDeviceInfo.printMessage("Search parameters are incorrect");
         }
 
         DAOFactory factory = DAOFactory.getInstance();
         DeviceDAO deviceDAO = factory.getDeviceDAO();
 
-        List<Device> device = deviceDAO.find(criteria);///////////////
+        List<Device> device = deviceDAO.find(criteria);
         // you may add your own code here
 
         return device;

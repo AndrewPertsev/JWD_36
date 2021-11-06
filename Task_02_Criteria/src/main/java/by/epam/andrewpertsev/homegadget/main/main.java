@@ -25,20 +25,20 @@ public class main {
         //////////////////////////////////////////////////////////////////
 
         Criteria<OVEN> criteriaOven = new Criteria<OVEN>(OVEN.class);
-        criteriaOven.add(OVEN.WIDTH, 33.0);
+        criteriaOven.add(OVEN.CAPACITY, 33.0);
 
         device1 = service.find(criteriaOven);
-        PrintDeviceInfo.print(device1);
+        PrintDeviceInfo.printListDevice(device1);
 
        //////////////////////////////////////////////////////////////////
 
         Criteria<OVEN> criteriaOven2 = new Criteria<>(OVEN.class);
         criteriaOven2.add(OVEN.HEIGHT, 200.0);
-        criteriaOven2.add(OVEN.DEPTH, 300.0);
+        criteriaOven2.add(OVEN.DEPTH, 80.0);
 
         device2 = service.find(criteriaOven2);
 
-        PrintDeviceInfo.print(device2);
+        PrintDeviceInfo.printListDevice(device2);
          /////////////////////////////////////////////////////////////////////////////
 
         Criteria<REFRIGERATOR> criteriaRef = new Criteria<>(REFRIGERATOR.class);
@@ -47,17 +47,17 @@ public class main {
 
         device3 = service.find(criteriaRef);
 
-        PrintDeviceInfo.print(device3);
+        PrintDeviceInfo.printListDevice(device3);
         //////////////////////////////////////////////////////////////////
 
         Criteria<TABLETPC> criteriaTabletPC = new Criteria<TABLETPC>(TABLETPC.class);
         criteriaTabletPC.add(TABLETPC.COLOR, "BLUE");
-        criteriaTabletPC.add(TABLETPC.DISPLAY_INCHES, 14.0);
+        criteriaTabletPC.add(TABLETPC.DISPLAY_INCHES, 8888814.0);
         criteriaTabletPC.add(TABLETPC.MEMORY_ROM, 4.0);
 
         device4 = service.find(criteriaTabletPC);
 
-        PrintDeviceInfo.print(device4);
+        PrintDeviceInfo.printListDevice(device4);
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 //        Criteria<SPEAKERS> criteriaSpeakers = new Criteria<SPEAKERS>(SPEAKERS.class);
 //        criteriaSpeakers.add(SPEAKERS.FREQUENCY_RANGE, "BLUE");
