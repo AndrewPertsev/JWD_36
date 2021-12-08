@@ -1,21 +1,35 @@
 package by.epam.ap.hotelapp.repository.connection;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.sql.*;
 import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.Executor;
 
- class WrapConnection implements Connection {
+class ProxyConnection implements Connection {
+    private static final Logger logger = LogManager.getLogger();
 
     private Connection connection;
 
-    WrapConnection(Connection connection) {
+    ProxyConnection(Connection connection) { //package visibility
         this.connection = connection;
     }
-     @Override
-     public void close() throws SQLException {
-         connection.close();
-     }
+
+    @Override
+    public void close() {
+        ConnectionPool pool = ConnectionPool.INSTANCE;
+        pool.releaseConnection(this);
+    }
+
+    protected void reallyClose() throws PoolException {
+        try {
+            connection.close();
+        } catch (SQLException throwables) {
+            throw new PoolException("Unable to close connections.");
+        }
+    }
 
     @Override
     public Statement createStatement() throws SQLException {
@@ -57,9 +71,7 @@ import java.util.concurrent.Executor;
         connection.rollback();
     }
 
-
-
-     @Override
+    @Override
     public boolean isClosed() throws SQLException {
         return connection.isClosed();
     }
