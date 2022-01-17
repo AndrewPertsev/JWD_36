@@ -1,4 +1,4 @@
-package by.epam.ap.hotelapp.model;
+package by.epam.heritage.ap.model;
 
 import java.io.Serializable;
 

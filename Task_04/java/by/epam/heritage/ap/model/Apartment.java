@@ -1,50 +1,41 @@
-package by.epam.ap.hotelapp.model.impl;
+package by.epam.heritage.ap.model;
 
-import by.epam.ap.hotelapp.model.Entity;
 
+import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Objects;
 
-public class Apartment extends Entity {
-    private int id;
-    private String category;
-    private int price;
+public class Apartment extends Entity  implements Serializable {
+    private int apartmentId;
+    private int category;
     private int capacity;
     private String description;
     private String pathToPicture;
 
     public Apartment(){}
 
-    public Apartment(int id, String category, int price, int capacity, String description, String pathToPicture) {
-        this.id = id;
+    public Apartment(int apartmentId, int category,  int capacity, String description, String pathToPicture) {
+        this.apartmentId = apartmentId;
         this.category = category;
-        this.price = price;
         this.capacity = capacity;
         this.description = description;
         this.pathToPicture = pathToPicture;
     }
 
-    public int getId() {
-        return id;
+    public int getApartmentId() {
+        return apartmentId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setApartmentId(int apartmentId) {
+        this.apartmentId = apartmentId;
     }
 
-    public String getCategory() {
+    public int getCategory() {
         return category;
     }
 
-    public void setCategory(String category) {
-        this.category = category;
-    }
-
-    public int getPrice() {
-        return price;
-    }
-
-    public void setPrice(int price) {
-        this.price = price;
+    public void setCategory(int categoryId) {
+        this.category = categoryId;
     }
 
     public int getCapacity() {
@@ -74,26 +65,21 @@ public class Apartment extends Entity {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Apartment)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
         Apartment apartment = (Apartment) o;
-        return getId() == apartment.getId() &&
-                Double.compare(apartment.getPrice(), getPrice()) == 0 &&
-                getCapacity() == apartment.getCapacity() &&
-                getCategory().equals(apartment.getCategory()) &&
-                getDescription().equals(apartment.getDescription());
+        return apartmentId == apartment.apartmentId && category == apartment.category && capacity == apartment.capacity && Objects.equals(description, apartment.description) && Objects.equals(pathToPicture, apartment.pathToPicture);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getCategory(), getPrice(), getCapacity(), getDescription());
+        return Objects.hash(apartmentId, category, capacity, description, pathToPicture);
     }
 
     @Override
     public String toString() {
         return "Apartment{" +
-                "id=" + id +
-                ", category='" + category + '\'' +
-                ", price=" + price +
+                "id=" + apartmentId +
+                ", categoryId='" + category + '\'' +
                 ", capacity=" + capacity +
                 ", description='" + description + '\'' +
                 ", pathToPicture='" + pathToPicture + '\'' +
