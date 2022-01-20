@@ -1,6 +1,5 @@
 package by.epam.heritage.ap.controller.impl;
 
-import by.epam.heritage.ap.controller.CommandException;
 import by.epam.heritage.ap.controller.Commandable;
 import by.epam.heritage.ap.model.Guest;
 import by.epam.heritage.ap.service.GuestServiceable;
@@ -17,53 +16,40 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-import static by.epam.heritage.ap.controller.ConstantsParametersAndAttributes.PARAMETER_GUEST_ID;
+import static by.epam.heritage.ap.controller.ConstantsParametersAndAttributes.*;
 
 public class UpdateGuestDataCommand implements Commandable {
     private static final Logger logger = LogManager.getLogger(UpdateGuestDataCommand.class);
 
 
     @Override
-    public void execute(HttpServletRequest request, HttpServletResponse response) throws CommandException, IOException, ServletException, ServiceException {
-        boolean isValidGuest = false;
+    public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         boolean done = false;
-        HttpSession session = request.getSession();
+        int idGuest = 0;
         Guest guestUpdated = null;
+
 
         try {
             guestUpdated = BuilderFactory.getInstance().getGuestBuilder().update(request);
         } catch (ValidatorException e) {
-            e.printStackTrace();
+            logger.error("Can't validate incoming data", e);
+            request.setAttribute(ATTRIBUTE_MESSAGE_FAIL, MESSAGE_INVALID_DATA);
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST);
         }
-
-        int idGuest = (Integer.parseInt(request.getParameter(PARAMETER_GUEST_ID)));
 
         GuestServiceable guestService = ServiceFactory.getInstance().getGuestService();
 
-        done = guestService.update(guestUpdated);
+        try {
+            idGuest = (Integer.parseInt(request.getParameter(PARAMETER_GUEST_ID)));
+            done = guestService.update(guestUpdated);
+        } catch (ServiceException e) {
+            logger.error("Can't execute request to database", e);
+            request.setAttribute(ATTRIBUTE_MESSAGE_FAIL, MESSAGE_DATABASE_ERROR);
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+        }
 
-        response.sendRedirect("Controller?command=GO_TO_GUEST_MANAGEMENT_PAGE&" + PARAMETER_GUEST_ID + "=" + idGuest);
+        response.sendRedirect("Controller?" + PARAMETER_COMMAND + "=GO_TO_GUEST_MANAGEMENT_PAGE&" + PARAMETER_GUEST_ID + "=" + idGuest);
 
     }
 }
 
-
-
-
-//        int roleId      =  (Integer.parseInt(request.getParameter("roleId")));;
-//        String ema       =  (request.getParameter("email"));;
-//        String name       = (request.getParameter("name"));
-//        String surname      =  (request.getParameter("surname"));
-//        String pho        =  (request.getParameter("phone"));;
-//        String comment       =  (request.getParameter("comment"));;
-//        boolean  isVip       =  Boolean.parseBoolean(request.getParameter("isVip"));;
-//        boolean  isNonGrata      =  (Boolean.parseBoolean(request.getParameter("isNonGrata")));;
-//
-//        System.out.println("roleId " + roleId);
-//        System.out.println("ema     " + ema    );
-//        System.out.println("name    " + name   );
-//        System.out.println("surname " + surname);
-//        System.out.println("pho     " + pho    );
-//        System.out.println("comment " + comment);
-//        System.out.println("isVip   " + isVip  );
-//        System.out.println("isgrata " + isNonGrata);

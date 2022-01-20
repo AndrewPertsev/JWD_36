@@ -6,5 +6,4 @@ import java.math.BigDecimal;
 
 public interface TransferDao extends BaseDAO<Transfer> {
 
-    BigDecimal getTransferTotalPrice(int idTransfer, int distance) throws DAOException;
 }

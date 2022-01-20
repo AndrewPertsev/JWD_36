@@ -18,34 +18,30 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GuestDaoImpl implements GuestDao {
-    ConnectionPool connectionPool = ConnectionPool.getInstance();
+    private ConnectionPool connectionPool = ConnectionPool.getInstance();
     private static final Logger logger = LogManager.getLogger(GuestDaoImpl.class);
 
-    private static final String UPDATE_GUEST_PASSWORD_IN_USERS = "UPDATE hotelappdb.users SET password= ? WHERE (user_id = ?)";
     private static final String ADD_GUEST_INTO_USERS = "INSERT INTO hotelappdb.users (role_id,login, password, user_name, surname, email, tel, passport_number, country, comments, vip_status, nongrata_status) VALUES (?,?,?, ?,?,? ,?,?,?, ?,?,?)";
-    private static final String UPDATE_GUEST = "UPDATE hotelappdb.users SET role_id =?, user_name = ?,surname = ?,email = ?, tel = ?, comments = ?, vip_status = ?, nongrata_status = ? WHERE (user_id = ?);";
+    private static final String DELETE_GUEST_BY_ID = "DELETE FROM hotelappdb.users WHERE user_id= ?";
     private static final String FIND_GUEST_BY_LOGIN = "SELECT users.user_id ,role_id ,login ,user_name,surname ,email ,tel ,passport_number ,country ,vip_status ,nongrata_status ,comments ,password FROM users WHERE login = ? ";
     private static final String FIND_GUEST_BY_ID = "SELECT users.user_id ,role_id ,login ,user_name,surname ,email ,tel ,passport_number ,country ,vip_status ,nongrata_status ,comments ,password FROM users WHERE users.user_id = ?";
-    private static final String DELETE_GUEST_BY_ID = "DELETE FROM hotelappdb.users WHERE user_id= ?";
     private static final String FIND_ALL_GUEST = "SELECT users.user_id ,role_id ,login ,user_name,surname ,email ,tel ,passport_number ,country ,vip_status ,nongrata_status ,comments FROM hotelappdb.users ";
+    private static final String UPDATE_GUEST = "UPDATE hotelappdb.users SET role_id =?, user_name = ?,surname = ?,email = ?, tel = ?, comments = ?, vip_status = ?, nongrata_status = ? WHERE (user_id = ?);";
+    private static final String UPDATE_GUEST_PASSWORD_IN_USERS = "UPDATE hotelappdb.users SET password= ? WHERE (user_id = ?)";
 
     public GuestDaoImpl() {
     }
 
     @Override
     public List<Guest> findAll() throws DAOException {
-
+        PreparedStatement statement = null;
+        Connection connection = null;
+        ResultSet rs = null;
         List<Guest> guests = new ArrayList<>();
 
-        Connection connection = null;
-        PreparedStatement statement = null;
-        ResultSet rs = null;
         try {
             connection = connectionPool.getConnection();
-            // connection.setAutoCommit(false);
-
             statement = connection.prepareStatement(FIND_ALL_GUEST);
-
             rs = statement.executeQuery();
 
             while (rs.next()) {
@@ -70,7 +66,6 @@ public class GuestDaoImpl implements GuestDao {
         } catch (SQLException | PoolException e) {
             logger.error("Element does not found ", e);
             throw new DAOException(e);
-
         } finally {
             try {
                 connectionPool.closeConnection(connection, statement, rs);
@@ -88,6 +83,7 @@ public class GuestDaoImpl implements GuestDao {
         boolean done = true;
         Connection connection = null;
         PreparedStatement statement = null;
+
         try {
             connection = connectionPool.getConnection();
             statement = connection.prepareStatement(UPDATE_GUEST);
@@ -102,15 +98,12 @@ public class GuestDaoImpl implements GuestDao {
             statement.setBoolean(8, guest.isNonGrata());
             statement.setInt(9, guest.getGuestId());
 
-
             statement.executeUpdate();
-
 
         } catch (SQLException | PoolException e) {
             done = false;
             logger.error("Element does not found ", e);
             throw new DAOException(e);
-
         } finally {
             try {
                 connectionPool.closeConnection(connection, statement);
@@ -128,6 +121,7 @@ public class GuestDaoImpl implements GuestDao {
         boolean done = true;
         Connection connection = null;
         PreparedStatement statement = null;
+
         try {
             connection = connectionPool.getConnection();
             statement = connection.prepareStatement(ADD_GUEST_INTO_USERS);
@@ -148,7 +142,6 @@ public class GuestDaoImpl implements GuestDao {
 
             statement.executeUpdate();
 
-
         } catch (SQLException | PoolException e) {
             done = false;
             logger.error("Element does not found ", e);
@@ -167,18 +160,16 @@ public class GuestDaoImpl implements GuestDao {
 
     public boolean updatePassword(int idGuest, String newPassword) throws DAOException {
         boolean done = true;
-        String hashPassword = BCrypt.hashpw(newPassword, BCrypt.gensalt());
         Connection connection = null;
         PreparedStatement statement = null;
+        String hashPassword = BCrypt.hashpw(newPassword, BCrypt.gensalt());
+
         try {
             connection = connectionPool.getConnection();
             statement = connection.prepareStatement(UPDATE_GUEST_PASSWORD_IN_USERS);
-
             statement.setString(1, hashPassword);
             statement.setInt(2, idGuest);
-
             statement.executeUpdate();
-
 
         } catch (SQLException | PoolException e) {
             done = false;
@@ -198,22 +189,19 @@ public class GuestDaoImpl implements GuestDao {
 
     @Override
     public Guest findGuestByLogin(String login) throws DAOException {
+        PreparedStatement statement = null;
+        Connection connection = null;
+        ResultSet rs = null;
         Guest guest = new Guest();
 
-        Connection connection = null;
-        PreparedStatement statement = null;
-        ResultSet rs = null;
         try {
             connection = connectionPool.getConnection();
-            // connection.setAutoCommit(false);
-
             statement = connection.prepareStatement(FIND_GUEST_BY_LOGIN);
             statement.setString(1, login);
-
-
             rs = statement.executeQuery();
 
             while (rs.next()) {
+
                 guest.setGuestId(rs.getInt(1));
                 guest.setRoleId(rs.getInt(2));
                 guest.setLogin(rs.getString(3));
@@ -233,7 +221,6 @@ public class GuestDaoImpl implements GuestDao {
         } catch (SQLException | PoolException e) {
             logger.error("Element does not found ", e);
             throw new DAOException(e);
-
         } finally {
             try {
                 connectionPool.closeConnection(connection, statement, rs);
@@ -247,19 +234,16 @@ public class GuestDaoImpl implements GuestDao {
 
     @Override
     public Guest findByid(int id) throws DAOException {
-        String idString = String.valueOf(id);
-        Guest guest = new Guest();
-
-        Connection connection = null;
         PreparedStatement statement = null;
+        Connection connection = null;
         ResultSet rs = null;
+        Guest guest = new Guest();
+        String idString = String.valueOf(id);
+
         try {
             connection = connectionPool.getConnection();
-            // connection.setAutoCommit(false);
-
             statement = connection.prepareStatement(FIND_GUEST_BY_ID);
             statement.setString(1, idString);
-
             rs = statement.executeQuery();
 
             while (rs.next()) {

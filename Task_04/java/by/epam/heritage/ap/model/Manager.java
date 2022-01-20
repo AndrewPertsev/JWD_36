@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 public class Manager extends User implements Serializable {
+    private static final long serialVersionUID = 1L;
     private int managerId;
     private String name;
     private String surname;
@@ -97,7 +98,9 @@ public class Manager extends User implements Serializable {
         return phone;
     }
 
-    public void setPhone(String phone) {this.phone = phone; }
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
 
     @Override
     public boolean equals(Object o) {

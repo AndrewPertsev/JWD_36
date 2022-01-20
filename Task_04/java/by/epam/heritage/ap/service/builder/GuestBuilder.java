@@ -3,7 +3,6 @@ package by.epam.heritage.ap.service.builder;
 import by.epam.heritage.ap.model.Guest;
 import by.epam.heritage.ap.service.ServiceException;
 import by.epam.heritage.ap.service.validator.GuestValidator;
-import by.epam.heritage.ap.service.validator.Validable;
 import by.epam.heritage.ap.service.validator.ValidatorException;
 import by.epam.heritage.ap.service.validator.ValidatorFactory;
 import org.apache.logging.log4j.LogManager;
@@ -19,10 +18,10 @@ public class GuestBuilder implements Buildable {
     private static final Logger logger = LogManager.getLogger(GuestBuilder.class);
 
     public Guest create(HttpServletRequest request) throws ServiceException, ValidatorException {
-        Boolean isValidGuest =true;
-       GuestValidator validator = ValidatorFactory.getInstance().getGuestValidator();
+        Boolean isValidGuest = true;
 
-           isValidGuest = validator.checkNewEntityIsValid(request);
+        GuestValidator validator = ValidatorFactory.getInstance().getGuestValidator();
+        isValidGuest = validator.checkNewEntityIsValid(request);
         if (isValidGuest == false) {
             logger.error("Fail validation new guest");
             throw new ValidatorException();
@@ -52,7 +51,7 @@ public class GuestBuilder implements Buildable {
 
     public Guest update(HttpServletRequest request) throws ValidatorException {
         Boolean isValidGuest = true;
-  GuestValidator validator = ValidatorFactory.getInstance().getGuestValidator();
+        GuestValidator validator = ValidatorFactory.getInstance().getGuestValidator();
 
         try {
             isValidGuest = validator.checkUpdatedEntityIsValid(request);
@@ -75,7 +74,7 @@ public class GuestBuilder implements Buildable {
 
                 return newGuest;
             }
-        } catch ( ServiceException e) {
+        } catch (ServiceException e) {
             logger.error("Attempt of updating invalid guest  data", e);
             throw new ValidatorException(e);
         }

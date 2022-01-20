@@ -14,10 +14,9 @@ public final class DaoFactory {
         try {
             INSTANCE = new DaoFactory();
         } catch (DAOException | PoolException e) {
-           throw new RuntimeException("Pool is not created", e );
+            throw new RuntimeException("Pool is not created", e);
         }
     }
-
 
     private ApartmentDao apartmentDao = new ApartmentDaoImpl();
     private TimesheetDao timesheetDao = new TimesheetDaoImpl();

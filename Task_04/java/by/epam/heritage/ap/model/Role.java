@@ -5,10 +5,13 @@ import java.io.Serializable;
 import java.util.Objects;
 
 public class Role extends Entity implements Serializable {
+    private static final long serialVersionUID = 1L;
     private int roleId;
-    private String  role;
+    private String role;
 
-    public Role(){}
+    public Role() {
+    }
+
     public Role(int roleId, String role) {
         this.roleId = roleId;
         this.role = role;
@@ -26,7 +29,7 @@ public class Role extends Entity implements Serializable {
         return role;
     }
 
-    public void setRole(String  role) {
+    public void setRole(String role) {
         this.role = role;
     }
 

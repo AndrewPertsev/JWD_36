@@ -5,11 +5,13 @@ import java.math.BigDecimal;
 import java.util.Objects;
 
 public class Menu extends Entity implements Serializable {
+    private static final long serialVersionUID = 1L;
     private int menu;
     private BigDecimal price;
     private String menuMode;
 
-    public Menu(){}
+    public Menu() {
+    }
 
     public Menu(int menu, String menuMode, BigDecimal price) {
         this.menu = menu;
@@ -25,11 +27,11 @@ public class Menu extends Entity implements Serializable {
         this.menu = menu;
     }
 
-    public String  getMenuMode() {
+    public String getMenuMode() {
         return menuMode;
     }
 
-    public void setMenuMode(String  menuMode) {
+    public void setMenuMode(String menuMode) {
         this.menuMode = menuMode;
     }
 

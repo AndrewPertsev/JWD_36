@@ -13,15 +13,14 @@ import java.util.concurrent.Executor;
 public class ConnectionPool {
     private static final Logger logger = LogManager.getLogger(ConnectionPool.class);
 
-    private static final ConnectionPool instance = new ConnectionPool();
-    private BlockingQueue<Connection> connectionPool = null;
-    private BlockingQueue<Connection> activeConnections = null;
-
     private static int POOL_SIZE;
     private static String DB_URL;
     private static String DB_USER;
     private static String DB_DRIVER;
     private static String DB_PASSWORD;
+    private BlockingQueue<Connection> connectionPool = null;
+    private BlockingQueue<Connection> activeConnections = null;
+    private static final ConnectionPool instance = new ConnectionPool();
 
     private ConnectionPool() {
         DBResourceManager dbResourceManager = DBResourceManager.getInstance();
@@ -46,7 +45,6 @@ public class ConnectionPool {
         Connection connection = null;
         try {
             Class.forName(DB_DRIVER);
-            System.out.println("DRIVER INIT"); //////////////////////////////////////////////////////////////
             connectionPool = new ArrayBlockingQueue<>(POOL_SIZE);
             activeConnections = new ArrayBlockingQueue<>(POOL_SIZE);
 
@@ -54,8 +52,8 @@ public class ConnectionPool {
                 connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
                 ProxyConnection proxyConnection = new ProxyConnection(connection);
                 connectionPool.add(proxyConnection);
-                System.out.println("conn init");/////////////////////////////////////////////////////////////////////////
             }
+
         } catch (SQLException e) {
             logger.error("Unable to connect driver.", e);
             throw new PoolException(e);
@@ -89,7 +87,6 @@ public class ConnectionPool {
 
     private void closeConnectionsQueue(BlockingQueue<Connection> queue) throws SQLException, PoolException {
         Connection connection = queue.poll();
-        System.out.println("CPool CLOSE QUEUES");///////////////////////////////////////////////////////////
         while (queue.poll() != null) {
             if (!connection.getAutoCommit()) {
                 connection.commit();
@@ -102,21 +99,20 @@ public class ConnectionPool {
     public void closeConnection(Connection con, Statement st, ResultSet rs) throws PoolException {
         try {
             rs.close();
-
         } catch (SQLException e) {
             logger.error("ResultSet isn't closed.", e);
             throw new PoolException(e);
         }
+
         try {
             st.close();
-
         } catch (SQLException e) {
             logger.error("Statement isn't closed.", e);
             throw new PoolException(e);
         }
+
         try {
             con.close();
-            System.out.println(" connection back to pool");////////////////////////////////////////////
         } catch (SQLException e) {
             logger.error("Connection isn't return to the pool.", e);
             throw new PoolException(e);
@@ -130,6 +126,7 @@ public class ConnectionPool {
             logger.error("Statement isn't closed.", e);
             throw new PoolException(e);
         }
+
         try {
             con.close();
         } catch (SQLException e) {
@@ -141,7 +138,6 @@ public class ConnectionPool {
 
     private class ProxyConnection implements Connection {
         private final Logger logger = LogManager.getLogger(this.getClass().getName());
-
         private Connection connection;
 
         public ProxyConnection(Connection connection) throws SQLException {

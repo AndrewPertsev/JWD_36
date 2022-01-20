@@ -2,19 +2,20 @@ package by.epam.heritage.ap.model;
 
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.Objects;
 
-public class Apartment extends Entity  implements Serializable {
+public class Apartment extends Entity implements Serializable {
+    private static final long serialVersionUID = 1L;
     private int apartmentId;
     private int category;
     private int capacity;
     private String description;
     private String pathToPicture;
 
-    public Apartment(){}
+    public Apartment() {
+    }
 
-    public Apartment(int apartmentId, int category,  int capacity, String description, String pathToPicture) {
+    public Apartment(int apartmentId, int category, int capacity, String description, String pathToPicture) {
         this.apartmentId = apartmentId;
         this.category = category;
         this.capacity = capacity;

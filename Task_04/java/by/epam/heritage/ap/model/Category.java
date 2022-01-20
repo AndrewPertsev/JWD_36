@@ -4,7 +4,8 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Objects;
 
-public class Category extends  Entity implements Serializable {
+public class Category extends Entity implements Serializable {
+    private static final long serialVersionUID = 1L;
     private int category;
     private String categoryName;
     private BigDecimal categoryPrice;

@@ -26,24 +26,24 @@ public final class RequestValidator implements Validable {
         String menu = request.getParameter(PARAMETER_MENU);
 
 
-        if (!inspectIsValidRequestBookingDate(dateIn, dateout)) {
+        if (! inspectIsValidRequestBookingDate( dateIn, dateout)) {
             logger.error("Fail validation date ");
             return false;
         }
 
-        if (!ValidatorCommon.validateStrinqParameterIntegerClass(quantity, MAXIMUM_QUANTITY_PERSONS, MINIMUM_ZERO)) {
+        if ( ! ValidatorCommon.validateStrinqParameterIntegerClass ( quantity, MAXIMUM_QUANTITY_PERSONS, MINIMUM_ZERO)) {
             logger.error("Fail validation quantity ");
             return false;
         }
-        if (!ValidatorCommon.validateStrinqParameterIntegerClass(category, MAXIMUM_CATEGORY_NUMBER_APARTMENT, MINIMUM_ZERO)) {
+        if ( ! ValidatorCommon.validateStrinqParameterIntegerClass ( category, MAXIMUM_CATEGORY_NUMBER_APARTMENT, MINIMUM_ZERO)) {
             logger.error("Fail validation category ");
             return false;
         }
-        if (!ValidatorCommon.validateStrinqParameterIntegerClass(transfer, MAXIMUM_TRANSFER_ID, MINIMUM_ZERO)) {
+        if ( ! ValidatorCommon.validateStrinqParameterIntegerClass ( transfer, MAXIMUM_TRANSFER_ID, MINIMUM_ZERO)) {
             logger.error("Fail validation transfer id ");
             return false;
         }
-        if (!ValidatorCommon.validateStrinqParameterIntegerClass(menu, MAXIMUM_MENU_ID, MINIMUM_ZERO)) {
+        if ( ! ValidatorCommon.validateStrinqParameterIntegerClass ( menu, MAXIMUM_MENU_ID, MINIMUM_ZERO)) {
             logger.error("Fail validation menu id ");
             return false;
         }
@@ -53,14 +53,13 @@ public final class RequestValidator implements Validable {
     }
 
 
-
     @Override
     public boolean checkUpdatedEntityIsValid(HttpServletRequest request) throws ValidatorException {
         String idRequest = request.getParameter(PARAMETER_REQUEST_ID);
         boolean isValid = false;
 
-        isValid = inspectIsValidRequestIdForUpdateRequest(idRequest);
-        if (!isValid) {
+        isValid = inspectIsValidRequestIdToUpdateRequest( idRequest);
+        if ( ! isValid) {
             logger.error("Fail validation request id ");
             return false;
         }
@@ -70,8 +69,7 @@ public final class RequestValidator implements Validable {
     }
 
 
-
-    public boolean inspectIsValidRequestIdForUpdateRequest(String idRequest) throws ValidatorException {
+    public boolean inspectIsValidRequestIdToUpdateRequest(String idRequest) throws ValidatorException {
         int maximumRequestId;
         RequestServiceable requestService = ServiceFactory.getInstance().getRequestService();
 
@@ -81,13 +79,12 @@ public final class RequestValidator implements Validable {
             logger.error("Service can't find max id request ");
             throw new ValidatorException(e);
         }
-        if (!ValidatorCommon.validateStrinqParameterIntegerClass(idRequest, maximumRequestId, MINIMUM_ZERO)) {
+        if ( ! ValidatorCommon.validateStrinqParameterIntegerClass ( idRequest, maximumRequestId, MINIMUM_ZERO)) {
             return false;
         }
 
         return true;
     }
-
 
 
     public boolean inspectIsValidRequestBookingDate(String startDate, String endDate) {

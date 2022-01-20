@@ -1,6 +1,5 @@
 package by.epam.heritage.ap.service.validator;
 
-import by.epam.heritage.ap.service.ServiceException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -22,23 +21,23 @@ public final class ApartmentValidator implements Validable {
         String pathToPicture = request.getParameter(PARAMETER_PATH_TO_PICTURE);
         // .setPrice(BigDecimal.valueOf(Long.valueOf(request.getParameter("price")));
 
-        if (!ValidatorCommon.validateStrinqParameterIntegerClass(idApartmentParam, MAXIMUM_NUMBER_APARTMENT, MINIMUM_ZERO)) {
+        if ( ! ValidatorCommon.validateStrinqParameterIntegerClass ( idApartmentParam, MAXIMUM_NUMBER_APARTMENT, MINIMUM_ZERO)) {
             logger.error("Fail validation id apartment ");
             return false;
         }
-        if (!ValidatorCommon.validateStrinqParameterIntegerClass(capacityParam, MAXIMUM_CAPACITY_APARTMENT, MINIMUM_ZERO)) {
+        if ( ! ValidatorCommon.validateStrinqParameterIntegerClass ( capacityParam, MAXIMUM_CAPACITY_APARTMENT, MINIMUM_ZERO)) {
             logger.error("Fail validation capacity ");
             return false;
         }
-        if (!ValidatorCommon.validateStrinqParameterIntegerClass(categoryParam, MAXIMUM_CATEGORY_NUMBER_APARTMENT, MINIMUM_ZERO)) {
+        if ( ! ValidatorCommon.validateStrinqParameterIntegerClass ( categoryParam, MAXIMUM_CATEGORY_NUMBER_APARTMENT, MINIMUM_ZERO)) {
             logger.error("Fail validation category ");
             return false;
         }
-        if (!ValidatorCommon.validateParameterStringClass(pathToPicture, PATTERN_PICTURE_JPG)) {
+        if ( ! ValidatorCommon.validateParameterStringClass ( pathToPicture, PATTERN_PICTURE_JPG)) {
             logger.error("Fail validation picture path ");
             return false;
         }
-        if (!ValidatorCommon.validateParameterStringClass(description, PATTERN_DESCRIPTION)) {
+        if ( ! ValidatorCommon.validateParameterStringClass ( description, PATTERN_DESCRIPTION)) {
             logger.error("Fail validation description ");
             return false;
         }
@@ -47,7 +46,7 @@ public final class ApartmentValidator implements Validable {
     }
 
     @Override
-    public boolean checkUpdatedEntityIsValid(HttpServletRequest request) throws ServiceException {
+    public boolean checkUpdatedEntityIsValid(HttpServletRequest request) {
         return new ApartmentValidator().checkNewEntityIsValid(request);
     }
 

@@ -8,7 +8,7 @@ import org.apache.logging.log4j.Logger;
 import java.util.HashMap;
 import java.util.Map;
 
-import static by.epam.heritage.ap.controller.Commands.*;
+import static by.epam.heritage.ap.controller.ConstantsCommandPath.*;
 
 public final class ProviderCommand {
     private static final Logger logger = LogManager.getLogger(ProviderCommand.class);
@@ -19,13 +19,13 @@ public final class ProviderCommand {
         commands.put(OFFER, new OfferCommand());
         commands.put(LOG_IN, new LoginCommand());
         commands.put(REQUEST, new RequestCommand());
+        commands.put(SHOW_GUEST_DATA, new ShowGuestData());
         commands.put(REGISTRATION, new RegistrationCommand());
         commands.put(UPDATE_GUEST, new UpdateGuestDataCommand());
         commands.put(DELETE_REQUEST, new DeleteRequestCommand());
         commands.put(ADD_APARTMENT, new AddApartmentCommand());
         commands.put(UPDATE_REQUEST, new UpdateRequestDataCommand());
         commands.put(SWITCH_LANGUAGE, new SwitchLanguageCommand());
-        commands.put(SHOW_GUEST_DATA, new ShowGuestData());
         commands.put(DELETE_APARTMENT, new DeleteApartmentCommand());
         commands.put(UPDATE_APARTMENT, new UpdateApartmentDataCommand());
         commands.put(PUSH_OFFER_TO_USER, new PushOfferToUserCommand());
@@ -44,15 +44,17 @@ public final class ProviderCommand {
         commands.put(GO_TO_OFFER_MANAGEMENT_PAGE, new GoToOfferManagementPageCommand());
         commands.put(GO_TO_GUEST_MANAGEMENT_PAGE, new GoToGuestManagementPageCommand());
         commands.put(GO_TO_REQUEST_MANAGEMENT_PAGE, new GoToRequestManagementPageCommand());
+        commands.put(GO_TO_TIMESHEET_MANAGEMENT_PAGE, new GoToTimesheetManagementPageCommand());
         commands.put(GO_TO_APARTMENT_MANAGEMENT_PAGE, new GoToApartmentManagementPageCommand());
 
     }
 
 
-    public final Commandable getCommands(String command) throws CommandException {
+    public final Commandable getCommands(String command) {
         Commandable commandable = commands.get(command);
-        if (command == null) { logger.error("No such command ");
-            throw new CommandException("No such command");
+        if (command == null) {
+            logger.error("No such command ");//TODO EXCEPTION
+
         }
         return commandable;
     }

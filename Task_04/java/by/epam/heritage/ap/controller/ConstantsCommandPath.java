@@ -1,8 +1,8 @@
 package by.epam.heritage.ap.controller;
 
 
-public final class Commands {
-    private Commands() {
+public final class ConstantsCommandPath {
+    private ConstantsCommandPath() {
     }
 
     public static final String ADD_APARTMENT = "ADD_APARTMENT";
@@ -34,6 +34,35 @@ public final class Commands {
     public static final String GO_TO_REGISTRATION_PAGE = "GO_TO_REGISTRATION_PAGE";
     public static final String GO_TO_REQUEST_PAGE = "GO_TO_REQUEST_PAGE";
     public static final String GO_TO_REQUEST_MANAGEMENT_PAGE = "GO_TO_REQUEST_MANAGEMENT_PAGE";
+    public static final String GO_TO_TIMESHEET_MANAGEMENT_PAGE = "GO_TO_TIMESHEET_MANAGEMENT_PAGE";
+
+
+    public static final String PATH_GO_TO_APARTMENT_MANAGEMENT_PAGE ="WEB-INF/view/apartment_management.jsp";
+    public static final String PATH_GO_TO_GUEST_MANAGEMENT_PAGE = "WEB-INF/view/guest_management.jsp";
+    public static final String PATH_GO_TO_GUEST_ROOM_PAGE = "/WEB-INF/view/guest_room.jsp";
+    public static final String PATH_GO_TO_HOME_PAGE = "/WEB-INF/view/homepage.jsp";
+    public static final String PATH_GO_TO_LOGIN_PAGE = "/WEB-INF/view/login.jsp";
+    public static final String PATH_GO_TO_MAIN_PAGE = "WEB-INF/view/mainafterreg.jsp";
+    public static final String PATH_GO_TO_OFFER_MANAGEMENT_PAGE = "/WEB-INF/view/offer_management.jsp";
+    public static final String PATH_GO_TO_OFFER_PROJECT_PAGE = "/WEB-INF/view/offer_project.jsp";
+    public static final String PATH_GO_TO_REGISTRATION_PAGE = "/WEB-INF/view/registration.jsp";
+    public static final String PATH_GO_TO_REQUEST_MANAGEMENT_PAGE = "/WEB-INF/view/request_management.jsp";
+    public static final String PATH_GO_TO_REQUEST_PAGE = "/WEB-INF/view/request.jsp";
+    public static final String PATH_GO_TO_TIMESHEET_MANAGEMENT_PAGE = "/WEB-INF/view/timesheet_management.jsp";
+
+
+    public static final String PATH_TO_ERROR_400_PAGE = "/WEB-INF/view/error400.jsp";
+    public static final String PATH_TO_ERROR_403_PAGE = "/WEB-INF/view/error403.jsp";
+    public static final String PATH_TO_ERROR_404_PAGE = "/WEB-INF/view/error404.jsp";
+    public static final String PATH_TO_ERROR_500_PAGE = "/WEB-INF/view/error500.jsp";
+    public static final String PATH_TO_ERROR_PAGE = "/WEB-INF/view/error.jsp";
+
+  //  ***************************************************************************************
+
+
+    public static final String PATH_TO_ERROR_PAGE_REDIRECT = "/controller?command=error";
+
+
 
 
 }

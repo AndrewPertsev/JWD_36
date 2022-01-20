@@ -16,7 +16,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class RoleDaoImpl implements RoleDao {
-    ConnectionPool connectionPool= ConnectionPool.getInstance();
+    private ConnectionPool connectionPool = ConnectionPool.getInstance();
     private static final Logger logger = LogManager.getLogger(RoleDaoImpl.class);
 
     private static final String FIND_ROLE_BY_ID = "SELECT role_id, role FROM roles WHERE role_id = ?";
@@ -27,16 +27,14 @@ public class RoleDaoImpl implements RoleDao {
 
     @Override
     public Role findByid(int id) throws DAOException {
-        String idString = String.valueOf(id);
-        Role role = new Role();
-
-        Connection connection = null;
         PreparedStatement statement = null;
+        Connection connection = null;
         ResultSet rs = null;
+        Role role = new Role();
+        String idString = String.valueOf(id);
+
         try {
             connection = connectionPool.getConnection();
-            // connection.setAutoCommit(false);
-
             statement = connection.prepareStatement(FIND_ROLE_BY_ID);
             statement.setString(1, idString);
 
@@ -55,7 +53,7 @@ public class RoleDaoImpl implements RoleDao {
         } finally {
             try {
                 connectionPool.closeConnection(connection, statement, rs);
-            } catch ( PoolException e) {
+            } catch (PoolException e) {
                 logger.error("Can't close connection ", e);
                 throw new DAOException(e);
             }
@@ -71,19 +69,19 @@ public class RoleDaoImpl implements RoleDao {
 
     @Override
     public boolean update(Role entity) throws DAOException {
-        boolean done =true;
+        boolean done = true;
         return false;
     }
 
     @Override
     public boolean deleteByid(int id) throws DAOException {
-        boolean done =true;
+        boolean done = true;
         return false;
     }
 
     @Override
     public boolean add(Role entity) throws DAOException {
-        boolean done =true;
+        boolean done = true;
         return false;
     }
 }

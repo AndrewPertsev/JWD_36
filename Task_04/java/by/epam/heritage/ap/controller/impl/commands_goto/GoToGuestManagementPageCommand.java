@@ -1,6 +1,5 @@
 package by.epam.heritage.ap.controller.impl.commands_goto;
 
-import by.epam.heritage.ap.controller.CommandException;
 import by.epam.heritage.ap.controller.Commandable;
 import by.epam.heritage.ap.model.Guest;
 import by.epam.heritage.ap.service.GuestServiceable;
@@ -17,17 +16,17 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static by.epam.heritage.ap.controller.ConstantsParametersAndAttributes.ATTRIBUTE_GUEST_LIST;
-import static by.epam.heritage.ap.controller.ConstantsParametersAndAttributes.PARAMETER_GUEST_ID;
+import static by.epam.heritage.ap.controller.ConstantsCommandPath.PATH_GO_TO_GUEST_MANAGEMENT_PAGE;
+import static by.epam.heritage.ap.controller.ConstantsParametersAndAttributes.*;
 
 public class GoToGuestManagementPageCommand implements Commandable {
     private static final Logger logger = LogManager.getLogger(GoToGuestManagementPageCommand.class);
 
-    @Override
-    public void execute(HttpServletRequest request, HttpServletResponse response) throws CommandException, ServletException, IOException {
-        List<Guest> guestList = new ArrayList<>();
 
+    @Override
+    public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Guest guest = null;
+        List<Guest> guestList = new ArrayList<>();
         GuestServiceable guestService = ServiceFactory.getInstance().getGuestService();
 
         if (request.getParameter(PARAMETER_GUEST_ID) != null) {
@@ -35,7 +34,9 @@ public class GoToGuestManagementPageCommand implements Commandable {
             try {
                 guest = guestService.findByid(idGuest);
             } catch (ServiceException e) {
-                throw new CommandException(e);
+                logger.error("Can't execute request to database", e);
+                request.setAttribute(ATTRIBUTE_MESSAGE_FAIL, MESSAGE_DATABASE_ERROR);
+                response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             }
             guestList.add(guest);
 
@@ -43,13 +44,16 @@ public class GoToGuestManagementPageCommand implements Commandable {
             try {
                 guestList = guestService.findAll();
             } catch (ServiceException e) {
-                throw new CommandException(e);
+                logger.error("Can't execute request to database", e);
+                request.setAttribute(ATTRIBUTE_MESSAGE_FAIL, MESSAGE_DATABASE_ERROR);
+                response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 
             }
         }
+
         request.setAttribute(ATTRIBUTE_GUEST_LIST, guestList);
 
-        RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/view/guest_management.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher(PATH_GO_TO_GUEST_MANAGEMENT_PAGE);
         dispatcher.forward(request, response);
     }
 }

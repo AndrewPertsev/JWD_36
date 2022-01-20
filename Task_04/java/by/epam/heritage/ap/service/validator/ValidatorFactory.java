@@ -18,7 +18,9 @@ public final class ValidatorFactory {
     }
 
 
-    public ApartmentValidator getApartmentValidator() { return apartmentValidator; }
+    public ApartmentValidator getApartmentValidator() {
+        return apartmentValidator;
+    }
 
     public RequestValidator getRequestValidator() {
         return requestValidator;

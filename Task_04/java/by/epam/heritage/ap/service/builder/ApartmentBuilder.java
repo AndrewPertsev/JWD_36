@@ -18,13 +18,14 @@ public class ApartmentBuilder implements Buildable {
 
     public Apartment create(HttpServletRequest request) throws ValidatorException {
         Boolean isValidApartment = false;
-        ApartmentValidator validator = ValidatorFactory.getInstance().getApartmentValidator();
 
+        ApartmentValidator validator = ValidatorFactory.getInstance().getApartmentValidator();
         isValidApartment = validator.checkNewEntityIsValid(request);
         if (isValidApartment == false) {
             logger.error("Fail validation new apartment data");
             throw new ValidatorException();
         } else {
+
             Apartment newApartment = new Apartment();
 
             newApartment.setApartmentId(Integer.parseInt(request.getParameter(PARAMETER_APARTMENT_ID)));

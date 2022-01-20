@@ -28,16 +28,17 @@ public class RequestUserBuilder implements Buildable {
         } else {
 
             Request newRequestUser = new Request();
-            HttpSession session = request.getSession(true);
 
+            HttpSession session = request.getSession(true);
             var userId = session.getAttribute(PARAMETER_USER_ID);
             newRequestUser.setGuestId(Integer.parseInt(String.valueOf(userId)));
+
             newRequestUser.setStart(LocalDate.parse(request.getParameter(PARAMETER_CHECK_IN_DATE)));
             newRequestUser.setEnd(LocalDate.parse(request.getParameter(PARAMETER_CHECK_OUT_DATE)));
-            newRequestUser.setQuantity(Integer.parseInt(request.getParameter(PARAMETER_QUANTITY)));
             newRequestUser.setCategory(Integer.parseInt(request.getParameter(PARAMETER_CATEGORY)));
-            newRequestUser.setMenu(Integer.parseInt(request.getParameter(PARAMETER_MENU)));
+            newRequestUser.setQuantity(Integer.parseInt(request.getParameter(PARAMETER_QUANTITY)));
             newRequestUser.setTransfer(Integer.parseInt(request.getParameter(PARAMETER_TRANSFER)));
+            newRequestUser.setMenu(Integer.parseInt(request.getParameter(PARAMETER_MENU)));
             newRequestUser.setDistance(DEFAULT_DISTANCE);
             newRequestUser.setDateRequest(LocalDate.now());
 
@@ -59,6 +60,7 @@ public class RequestUserBuilder implements Buildable {
 
                 newRequestUser.setGuestId(Integer.parseInt(request.getParameter(PARAMETER_GUEST_ID)));
                 newRequestUser.setRequestId(Integer.parseInt(request.getParameter(PARAMETER_REQUEST_ID)));
+
                 newRequestUser.setStart(LocalDate.parse(request.getParameter(PARAMETER_CHECK_IN_DATE)));
                 newRequestUser.setEnd(LocalDate.parse(request.getParameter(PARAMETER_CHECK_OUT_DATE)));
                 newRequestUser.setCategory(Integer.parseInt(request.getParameter(PARAMETER_CATEGORY)));

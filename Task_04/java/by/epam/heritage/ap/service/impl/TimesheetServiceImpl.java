@@ -10,6 +10,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public class TimesheetServiceImpl implements TimesheetServiceable {
@@ -32,7 +33,15 @@ public class TimesheetServiceImpl implements TimesheetServiceable {
 
     @Override
     public List findAll() throws ServiceException {
-        return null;
+        List<Timesheet> timesheets = new ArrayList<>();
+        TimesheetDao timesheetDao = DaoFactory.getInstance().getTimesheetDao();
+        try {
+            timesheets = timesheetDao.findAll();
+        } catch (DAOException e) {
+            logger.error("Service can't reserve apartment in the timesheet ", e);
+            throw new ServiceException(e);
+        }
+        return timesheets;
     }
 
     @Override

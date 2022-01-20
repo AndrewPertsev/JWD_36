@@ -1,6 +1,5 @@
 package by.epam.heritage.ap.controller.impl;
 
-import by.epam.heritage.ap.controller.CommandException;
 import by.epam.heritage.ap.controller.Commandable;
 import by.epam.heritage.ap.model.Request;
 import by.epam.heritage.ap.service.RequestServiceable;
@@ -15,20 +14,23 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static by.epam.heritage.ap.controller.ConstantsParametersAndAttributes.MESSAGE_WELCOME;
+import static by.epam.heritage.ap.controller.ConstantsParametersAndAttributes.*;
 
 public class RequestCommand implements Commandable {
     private static final Logger logger = LogManager.getLogger(RequestCommand.class);
 
     @Override
-    public void execute(HttpServletRequest request, HttpServletResponse response) throws CommandException, IOException {
-
+    public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         boolean isValidRequest = true;
         Request requestUsers = null;
+
+
         try {
             requestUsers = BuilderFactory.getInstance().getRequestBuilder().create(request);
         } catch (ValidatorException e) {
-            throw new CommandException(e);
+            logger.error("Can't validate incoming data", e);
+            request.setAttribute(ATTRIBUTE_MESSAGE_FAIL, MESSAGE_INVALID_DATA);
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST);
         }
 
         RequestServiceable requestService = ServiceFactory.getInstance().getRequestService();
@@ -37,11 +39,13 @@ public class RequestCommand implements Commandable {
             try {
                 requestService.add(requestUsers);
             } catch (ServiceException e) {
-                throw new CommandException(e);
+                logger.error("Can't execute request to database", e);
+                request.setAttribute(ATTRIBUTE_MESSAGE_FAIL, MESSAGE_DATABASE_ERROR);
+                response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             }
 
-            response.sendRedirect("Controller?command=GO_TO_MAIN_PAGE&start=" + MESSAGE_WELCOME);
-        } else { //TODO
+            response.sendRedirect("Controller?" + PARAMETER_COMMAND + "=GO_TO_MAIN_PAGE&start=" + MESSAGE_SUCCESS);
+        } else { response.sendRedirect("Controller?" + PARAMETER_COMMAND + "=GO_TO_REQUEST_PAGE&errorMessage=" + MESSAGE_WRONG_DATA);
         }
     }
 }

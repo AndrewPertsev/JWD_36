@@ -9,7 +9,7 @@ public class ValidatorCommon {
 
     public static boolean validateParameterStringClass(String parameter, String pattern) {
         if (parameter == null || !(parameter.matches(pattern))) {
-            logger.error("Parameter \"" + parameter + "\" is not valid ");
+            logger.error("Parameter \"" + parameter + "\" is not valid, or empty");
             return false;
         } else {
             return true;
@@ -19,11 +19,10 @@ public class ValidatorCommon {
 
     public static boolean validateStrinqParameterIntegerClass(String parameterToInt, int maximum, int minimum) {
         if (parameterToInt == null || parameterToInt == "") {
-            logger.error("Parameter \"" + parameterToInt + "\" is not valid ");
+            logger.error("Parameter \"" + parameterToInt + "\" is empty ");
             return false;
         } else {
             int parsedParameter = Integer.parseInt(parameterToInt);
-//                System.out.println("VALIDATOR parsed-" + parsedParameter + " min-" + minimum);////////////////////////////////////////////////
 
             if (parsedParameter <= minimum || parsedParameter > maximum) {
                 logger.error("Parameter \"" + parameterToInt + "\" is not valid ");

@@ -23,7 +23,7 @@ public class ApartmentServiceImpl implements ApartmentServiceable {
         ApartmentDao apartmentDao = DaoFactory.getInstance().getApartmentDao();
 
         try {
-            done = apartmentDao.add((Apartment) entity);
+            done = apartmentDao.add(entity);
         } catch (DAOException e) {
             logger.error("Service can't add element ", e);
             throw new ServiceException(e);
@@ -81,7 +81,7 @@ public class ApartmentServiceImpl implements ApartmentServiceable {
         ApartmentDao apartmentDao = DaoFactory.getInstance().getApartmentDao();
 
         try {
-            done = apartmentDao.updateApartment((Apartment) apartment);
+            done = apartmentDao.updateApartment(apartment);
         } catch (DAOException e) {
             logger.error("Service can't update element ", e);
             throw new ServiceException(e);

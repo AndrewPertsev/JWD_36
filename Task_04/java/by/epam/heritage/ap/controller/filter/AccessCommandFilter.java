@@ -1,4 +1,4 @@
-package by.epam.heritage.ap.controller;
+package by.epam.heritage.ap.controller.filter;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import static by.epam.heritage.ap.controller.Commands.*;
+import static by.epam.heritage.ap.controller.ConstantsCommandPath.*;
 import static by.epam.heritage.ap.controller.ConstantsParametersAndAttributes.*;
 
 @WebFilter("/AccessCommandFilter")
@@ -60,7 +60,6 @@ public class AccessCommandFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) requestServlet;
         HttpServletResponse response = (HttpServletResponse) responseServlet;
         HttpSession session = request.getSession(true);
-       // String query = request.getQueryString();
 
         if (filterConfig.getInitParameter(PARAMETER_FILTER_ACTIVE).equalsIgnoreCase("true")) {
 
@@ -73,7 +72,7 @@ public class AccessCommandFilter implements Filter {
                     filterChain.doFilter(requestServlet, responseServlet);
 
                 } else {
-                    RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/view/registration.jsp");
+                    RequestDispatcher dispatcher = request.getRequestDispatcher(PATH_GO_TO_REGISTRATION_PAGE);
                     dispatcher.forward(request, response);
                 }
 

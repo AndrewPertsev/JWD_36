@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OfferDaoImpl implements OfferDao {
-    ConnectionPool connectionPool = ConnectionPool.getInstance();
+    private ConnectionPool connectionPool = ConnectionPool.getInstance();
     private static final Logger logger = LogManager.getLogger(OfferDaoImpl.class);
 
     private static final String FIND_OFFER_BY_USER_ID = "SELECT offer_id, offer.request_id, offer.transfer_id, offer.menu_id, offer.apartment_id, booked_from, booked_before, date_sent, date_paid, date_closed,  is_sent,is_paid,is_closed , price_offer, manager_id, offer.quantity_persons FROM offer INNER JOIN request ON offer.request_id=request.request_id WHERE  request.user_id= ?";
@@ -32,7 +32,7 @@ public class OfferDaoImpl implements OfferDao {
     private static final String INSERT_OFFER_CLOSED_STATUS = "UPDATE hotelappdb.offer SET is_closed= ? WHERE (offer_id = ?)";
 
 
-    public OfferDaoImpl()  {
+    public OfferDaoImpl() {
     }
 
 
@@ -55,7 +55,6 @@ public class OfferDaoImpl implements OfferDao {
             done = false;
             logger.error("Element does not found ", e);
             throw new DAOException(e);
-
         } finally {
             try {
                 connectionPool.closeConnection(connection, statement);
@@ -87,7 +86,6 @@ public class OfferDaoImpl implements OfferDao {
             done = false;
             logger.error("Element does not found ", e);
             throw new DAOException(e);
-
         } finally {
             try {
                 connectionPool.closeConnection(connection, statement);
@@ -119,11 +117,10 @@ public class OfferDaoImpl implements OfferDao {
             done = false;
             logger.error("Element does not found ", e);
             throw new DAOException(e);
-
         } finally {
             try {
                 connectionPool.closeConnection(connection, statement);
-            } catch ( PoolException e) {
+            } catch (PoolException e) {
                 logger.error("Can't close connection ", e);
                 throw new DAOException(e);
             }
@@ -154,7 +151,7 @@ public class OfferDaoImpl implements OfferDao {
             statement.setBoolean(10, ConstantsParametersAndAttributes.DEFAULT_IS_OFFER_SENT);
             statement.setBoolean(11, ConstantsParametersAndAttributes.DEFAULT_IS_OFFER_PAID);
             statement.setBoolean(12, ConstantsParametersAndAttributes.DEFAULT_IS_OFFER_CLOSED);
-            statement.setInt(13, offer.getPriceOffer().intValue());////////////////////////////////////////
+            statement.setInt(13, offer.getPriceOffer().intValue());
             statement.setInt(14, offer.getManagerId());
             statement.setInt(15, offer.getQuantity());
 
@@ -176,24 +173,23 @@ public class OfferDaoImpl implements OfferDao {
         }
     }
 
+
     @Override
     public Offer findByid(int id) throws DAOException {
-        String idSearch = String.valueOf(id);
-        Offer offer = new Offer();
-
-        Connection connection = null;
         PreparedStatement statement = null;
+        Connection connection = null;
         ResultSet rs = null;
+        Offer offer = new Offer();
+        String idSearch = String.valueOf(id);
 
         try {
             connection = connectionPool.getConnection();
-            // connection.setAutoCommit(false);
-
             statement = connection.prepareStatement(FIND_OFFER_BY_ID);
             statement.setString(1, idSearch);
-
             rs = statement.executeQuery();
+
             while (rs.next()) {
+
                 offer.setOfferId(rs.getInt(1));
                 offer.setRequestId(rs.getInt(2));
                 offer.setTransfer(rs.getInt(3));
@@ -211,12 +207,12 @@ public class OfferDaoImpl implements OfferDao {
                 offer.setManagerId(rs.getInt(15));
                 offer.setQuantity(rs.getInt(16));
             }
+
             return offer;
 
         } catch (SQLException | PoolException e) {
             logger.error("Element does not found ", e);
             throw new DAOException(e);
-
         } finally {
             try {
                 connectionPool.closeConnection(connection, statement, rs);
@@ -230,22 +226,20 @@ public class OfferDaoImpl implements OfferDao {
 
     @Override
     public List<Offer> getOffersByGuestId(int idUser) throws DAOException {
+        PreparedStatement statement = null;
+        Connection connection = null;
+        ResultSet rs = null;
         String id = String.valueOf(idUser);
         List<Offer> offers = new ArrayList<>();
 
-        Connection connection = null;
-        PreparedStatement statement = null;
-        ResultSet rs = null;
-
         try {
             connection = connectionPool.getConnection();
-            // connection.setAutoCommit(false);
-
             statement = connection.prepareStatement(FIND_OFFER_BY_USER_ID);
             statement.setString(1, id);
-
             rs = statement.executeQuery();
+
             while (rs.next()) {
+
                 Offer offer = new Offer();
 
                 offer.setOfferId(rs.getInt(1));
@@ -272,7 +266,6 @@ public class OfferDaoImpl implements OfferDao {
         } catch (SQLException | PoolException e) {
             logger.error("Element does not found ", e);
             throw new DAOException(e);
-
         } finally {
             try {
                 connectionPool.closeConnection(connection, statement, rs);
@@ -288,18 +281,17 @@ public class OfferDaoImpl implements OfferDao {
     @Override
     public List<Offer> findAll() throws DAOException {
         List<Offer> offers = new ArrayList<>();
-
-        Connection connection = null;
         PreparedStatement statement = null;
+        Connection connection = null;
         ResultSet rs = null;
 
         try {
             connection = connectionPool.getConnection();
-            // connection.setAutoCommit(false);
             statement = connection.prepareStatement(FIND_ALL_OFFERS);
-
             rs = statement.executeQuery();
+
             while (rs.next()) {
+
                 Offer offer = new Offer();
 
                 offer.setOfferId(rs.getInt(1));
@@ -326,7 +318,6 @@ public class OfferDaoImpl implements OfferDao {
         } catch (SQLException | PoolException e) {
             logger.error("Element does not found ", e);
             throw new DAOException(e);
-
         } finally {
             try {
                 connectionPool.closeConnection(connection, statement, rs);

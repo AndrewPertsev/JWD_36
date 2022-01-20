@@ -1,15 +1,13 @@
-package by.epam.heritage.ap.controller;
+package by.epam.heritage.ap.controller.filter;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.servlet.*;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 
 import static by.epam.heritage.ap.controller.ConstantsParametersAndAttributes.ENCODING_UTF8;
 import static by.epam.heritage.ap.controller.ConstantsParametersAndAttributes.PARAMETER_REQUEST_ENCODING;
-
 
 
 public class CharsetFilter implements Filter {
@@ -20,13 +18,7 @@ public class CharsetFilter implements Filter {
 
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 
-        try {
-            request.setCharacterEncoding(encoding);
-//            response.setCharacterEncoding(encoding);
-        } catch (UnsupportedEncodingException e) {
-/////////////////////////////////////////////////////////TODO
-        }
-        response.setCharacterEncoding(encoding);
+        request.setCharacterEncoding(encoding);
         chain.doFilter(request, response);
 
     }

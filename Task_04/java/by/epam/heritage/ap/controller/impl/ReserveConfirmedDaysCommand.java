@@ -1,6 +1,5 @@
 package by.epam.heritage.ap.controller.impl;
 
-import by.epam.heritage.ap.controller.CommandException;
 import by.epam.heritage.ap.controller.Commandable;
 import by.epam.heritage.ap.service.ServiceException;
 import by.epam.heritage.ap.service.ServiceFactory;
@@ -18,29 +17,30 @@ import static by.epam.heritage.ap.controller.ConstantsParametersAndAttributes.*;
 
 public class ReserveConfirmedDaysCommand implements Commandable {
     private static final Logger logger = LogManager.getLogger(ReserveConfirmedDaysCommand.class);
+
     @Override
-    public void execute(HttpServletRequest request, HttpServletResponse response) throws CommandException, IOException {
-        HttpSession session = request.getSession(true);
+    public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         int apartmentId;
         LocalDate bookedBefore;
         LocalDate bookedFrom;
 
-        bookedFrom = LocalDate.parse(request.getParameter(PARAMETER_CHECK_IN_DATE));
-        bookedBefore = LocalDate.parse(request.getParameter(PARAMETER_CHECK_OUT_DATE));
-
         TimesheetServiceable timesheetService = ServiceFactory.getInstance().getTimesheetService();
-        apartmentId = Integer.parseInt(request.getParameter(PARAMETER_APARTMENT_ID));
 
         try {
+            apartmentId = Integer.parseInt(request.getParameter(PARAMETER_APARTMENT_ID));
+            bookedFrom = LocalDate.parse(request.getParameter(PARAMETER_CHECK_IN_DATE));
+            bookedBefore = LocalDate.parse(request.getParameter(PARAMETER_CHECK_OUT_DATE));
             timesheetService.reserveConfirmedDaysByOffer(apartmentId, bookedFrom, bookedBefore);//////////////////////////TODO
         } catch (ServiceException e) {
-            throw new CommandException(e);
+            logger.error("Can't execute request to database", e);
+            request.setAttribute(ATTRIBUTE_MESSAGE_FAIL, MESSAGE_DATABASE_ERROR);
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
 
 
         boolean flag = true;///////TODO
         if (flag) {
-            response.sendRedirect("Controller?command=GO_TO_OFFER_MANAGEMENT_PAGE&messageOffer=" + MESSAGE_WELCOME);
+            response.sendRedirect("Controller?" + PARAMETER_COMMAND + "=GO_TO_OFFER_MANAGEMENT_PAGE&messageOffer=" + MESSAGE_SUCCESS);
         } else {
         }
 

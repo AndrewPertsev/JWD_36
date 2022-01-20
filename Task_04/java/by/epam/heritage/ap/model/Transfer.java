@@ -5,13 +5,15 @@ import java.math.BigDecimal;
 import java.util.Objects;
 
 public class Transfer extends Entity implements Serializable {
+    private static final long serialVersionUID = 1L;
     private int transfer;
-    private String  transferMode;
+    private String transferMode;
     private BigDecimal price;
 
-    public Transfer(){}
+    public Transfer() {
+    }
 
-    public Transfer(int transfer, String  transferMode, BigDecimal price) {
+    public Transfer(int transfer, String transferMode, BigDecimal price) {
         this.transfer = transfer;
         this.transferMode = transferMode;
         this.price = price;
@@ -25,11 +27,11 @@ public class Transfer extends Entity implements Serializable {
         this.transfer = transfer;
     }
 
-    public String  getTransferMode() {
+    public String getTransferMode() {
         return transferMode;
     }
 
-    public void setTransferMode(String  transferMode) {
+    public void setTransferMode(String transferMode) {
         this.transferMode = transferMode;
     }
 

@@ -16,7 +16,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class CategoryDaoImpl implements CategoryDao {
-    ConnectionPool connectionPool = ConnectionPool.getInstance();
+    private ConnectionPool connectionPool = ConnectionPool.getInstance();
     private static final Logger logger = LogManager.getLogger(CategoryDaoImpl.class);
 
     private static final String GET_CATEGORY_PRICE_BY_CATEGORY_ID = "SELECT category_price FROM category_room WHERE category_id = ?";
@@ -27,19 +27,16 @@ public class CategoryDaoImpl implements CategoryDao {
 
 
     public Category findByid(int id) throws DAOException {
+        PreparedStatement statement = null;
+        Connection connection = null;
+        ResultSet rs = null;
         String idString = String.valueOf(id);
         Category category = new Category();
 
-        Connection connection = null;
-        PreparedStatement statement = null;
-        ResultSet rs = null;
         try {
             connection = connectionPool.getConnection();
-            // connection.setAutoCommit(false);
-
             statement = connection.prepareStatement(FIND_CATEGORY_BY_ID);
             statement.setString(1, idString);
-
             rs = statement.executeQuery();
 
             while (rs.next()) {
@@ -67,19 +64,16 @@ public class CategoryDaoImpl implements CategoryDao {
 
     @Override
     public BigDecimal getCategoryPrice(int idCategory) throws DAOException {
-        BigDecimal categoryPrice = BigDecimal.valueOf(-1);
-        String idString = String.valueOf(idCategory);
-
-        Connection connection = null;
         PreparedStatement statement = null;
+        Connection connection = null;
         ResultSet rs = null;
+        String idString = String.valueOf(idCategory);
+        BigDecimal categoryPrice = BigDecimal.valueOf(-1);
+
         try {
             connection = connectionPool.getConnection();
-            // connection.setAutoCommit(false);
-
             statement = connection.prepareStatement(GET_CATEGORY_PRICE_BY_CATEGORY_ID);
             statement.setString(1, idString);
-
             rs = statement.executeQuery();
 
             while (rs.next()) {
@@ -90,7 +84,6 @@ public class CategoryDaoImpl implements CategoryDao {
         } catch (SQLException | PoolException e) {
             logger.error("Element does not found ", e);
             throw new DAOException(e);
-
         } finally {
             try {
                 connectionPool.closeConnection(connection, statement, rs);

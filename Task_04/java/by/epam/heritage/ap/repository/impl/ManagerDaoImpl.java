@@ -16,7 +16,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class ManagerDaoImpl implements ManagerDao {
-    ConnectionPool connectionPool = ConnectionPool.getInstance();
+    private ConnectionPool connectionPool = ConnectionPool.getInstance();
     private static final Logger logger = LogManager.getLogger(ManagerDaoImpl.class);
 
     private static final String FIND_MANAGER_BY_ID = "SELECT users.user_id ,role_id ,login ,user_name,surname ,email ,tel , passport_number FROM users WHERE users.user_id = ? AND role_id=2";
@@ -26,22 +26,20 @@ public class ManagerDaoImpl implements ManagerDao {
 
     @Override
     public Manager findByid(int id) throws DAOException {
+        PreparedStatement statement = null;
+        Connection connection = null;
+        ResultSet rs = null;
         String idString = String.valueOf(id);
         Manager manager = new Manager();
 
-        Connection connection = null;
-        PreparedStatement statement = null;
-        ResultSet rs = null;
         try {
             connection = connectionPool.getConnection();
-            // connection.setAutoCommit(false);
-
             statement = connection.prepareStatement(FIND_MANAGER_BY_ID);
             statement.setString(1, idString);
-
             rs = statement.executeQuery();
 
             while (rs.next()) {
+
                 manager.setGuestId(rs.getInt(1));
                 manager.setRoleId(rs.getInt(2));
                 manager.setLogin(rs.getString(3));
@@ -56,7 +54,6 @@ public class ManagerDaoImpl implements ManagerDao {
         } catch (SQLException | PoolException e) {
             logger.error("Element does not found ", e);
             throw new DAOException(e);
-
         } finally {
             try {
                 connectionPool.closeConnection(connection, statement, rs);

@@ -1,6 +1,5 @@
 package by.epam.heritage.ap.controller.impl;
 
-import by.epam.heritage.ap.controller.CommandException;
 import by.epam.heritage.ap.controller.Commandable;
 import by.epam.heritage.ap.model.Guest;
 import by.epam.heritage.ap.service.GuestServiceable;
@@ -15,37 +14,37 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static by.epam.heritage.ap.controller.ConstantsParametersAndAttributes.MESSAGE_WRONG_DATA;
+import static by.epam.heritage.ap.controller.ConstantsParametersAndAttributes.*;
 
 public class RegistrationCommand implements Commandable {
     private static final Logger logger = LogManager.getLogger(RegistrationCommand.class);
 
-    public static final String MESSAGE_REGISTRATION_SUCCESSFUL = "You are successfully registered, please, login.";
-
 
     @Override
-    public void execute(HttpServletRequest request, HttpServletResponse response) throws CommandException, IOException {
+    public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        Guest guestCandidate = null;
         boolean isValidCandidate = true;
         GuestServiceable guestService = ServiceFactory.getInstance().getGuestService();
 
-        Guest guestCandidate = null;
         try {
             guestCandidate = BuilderFactory.getInstance().getGuestBuilder().create(request);
-        } catch (ServiceException e) {
-            throw new CommandException(e);
-        } catch (ValidatorException e) {
-            throw new CommandException(e);
+        } catch (ServiceException | ValidatorException e) {
+            logger.error("Can't validate incoming data", e);
+            request.setAttribute(ATTRIBUTE_MESSAGE_FAIL, MESSAGE_INVALID_DATA);
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST);
         }
 
         try {
             isValidCandidate = guestService.add(guestCandidate);
         } catch (ServiceException e) {
-            throw new CommandException(e);
+            logger.error("Can't execute request to database", e);
+            request.setAttribute(ATTRIBUTE_MESSAGE_FAIL, MESSAGE_DATABASE_ERROR);
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
         if (isValidCandidate) {
-            response.sendRedirect("Controller?command=GO_TO_HOME_PAGE&message_regist_succ=" + MESSAGE_REGISTRATION_SUCCESSFUL);
+            response.sendRedirect("Controller?" + PARAMETER_COMMAND + "=GO_TO_HOME_PAGE&message_regist_succ=" + MESSAGE_REGISTRATION_SUCCESSFUL);
         } else {
-            response.sendRedirect("Controller?command=GO_TO_REGISTRATION_PAGE&errorMessage=" + MESSAGE_WRONG_DATA);
+            response.sendRedirect("Controller?" + PARAMETER_COMMAND + "=GO_TO_REGISTRATION_PAGE&errorMessage=" + MESSAGE_WRONG_DATA);
         }
     }
 }

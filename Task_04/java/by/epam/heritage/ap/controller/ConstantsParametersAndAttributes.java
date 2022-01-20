@@ -1,13 +1,17 @@
 package by.epam.heritage.ap.controller;
 
 public class ConstantsParametersAndAttributes {
+    public static final String MESSAGE_REGISTRATION_SUCCESSFUL = "You are successfully registered, please, login.";
+
     private ConstantsParametersAndAttributes() {
     }
 
-
-    public static final String MESSAGE_LOGIN = "message_login";
-    public static final String MESSAGE_WELCOME = "welcome!";
-    public static final String MESSAGE_WRONG_DATA = "your data not valid , try again";
+    public static final String ATTRIBUTE_MESSAGE_SUCCESS = "message_success";
+    public static final String ATTRIBUTE_MESSAGE_FAIL = "message_fail";
+    public static final String MESSAGE_SUCCESS = "Successful !";
+    public static final String MESSAGE_DATABASE_ERROR = "Database error.";
+    public static final String MESSAGE_INVALID_DATA = "Invalid data.";
+    public static final String MESSAGE_WRONG_DATA = "Sorry, your data is not valid , please try again.";
 
     public static final String SESSION_ATTRIBUTE_GUEST_ID = "userId";
     public static final String SESSION_ATTRIBUTE_GUEST_ROLE_ID = "userRoleId";
@@ -33,6 +37,9 @@ public class ConstantsParametersAndAttributes {
     public static final String PARAMETER_EMAIL = "email";
     public static final String PARAMETER_FILTER_ACTIVE = "active";
     public static final String PARAMETER_LOCALE_COMMON = "locale";
+    public static final String PARAMETER_LOCALE_DEFAULT_RU = "ru_RU";
+    public static final String PARAMETER_LOCALE_RU = "ru_RU";
+    public static final String PARAMETER_LOCALE_EN = "en_EN";
     public static final String PARAMETER_LOGIN = "login";
     public static final String PARAMETER_MENU = "menu";
     public static final String PARAMETER_NAME = "name";
@@ -49,12 +56,13 @@ public class ConstantsParametersAndAttributes {
     public static final String PARAMETER_TRANSFER = "transfer";
     public static final String PARAMETER_USER_ID= "userId";
 
+    public static final String ATTRIBUTE_OFFERS = "ATTRIBUTE_OFFERS";
+    public static final String ATTRIBUTE_REQUESTS = "ATTRIBUTE_REQUESTS";
     public static final String ATTRIBUTE_GUEST_LIST = "ATTRIBUTE_GUEST_LIST";
-    public static final String ATTRIBUTE_OFFERS = "offers";
-    public static final String ATTRIBUTE_REQUESTS = "requests";
     public static final String ATTRIBUTE_ROOM_LIST = "ATTRIBUTE_ROOM_LIST";
+    public static final String ATTRIBUTE_TIMESHEET = "ATTRIBUTE_TIMESHEET_LIST";
+    public static final String ATTRIBUTE_USER_OFFERS = "ATTRIBUTE_USER_OFFERS";
     public static final String ATTRIBUTE_URL = "url";
-    public static final String ATTRIBUTE_USER_OFFERS = "useroffers";
     public static final String DEFAULT_COMMENT = " ";
     public static final String ENCODING_UTF8 = "utf-8";
     public static final boolean IS_RESPONDED_STATUS_TRUE = true;

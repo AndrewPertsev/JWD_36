@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 public class Offer extends Entity implements Serializable {
+    private static final long serialVersionUID = 1L;
     private int offerId;
     private int quantity;
     private int requestId;
@@ -24,7 +25,10 @@ public class Offer extends Entity implements Serializable {
     private BigDecimal priceOffer;
 
 
-    public Offer(){};
+    public Offer() {
+    }
+
+    ;
 
     public Offer(int offerId, int requestId, int transfer, int menuId, int apartmentId, LocalDate start, LocalDate end, LocalDate dateSent, LocalDate datePaid, LocalDate dateClosed, boolean isSent, boolean isPaid, boolean isClosed, int managerId, int quantity, BigDecimal priceOffer) {
         this.offerId = offerId;

@@ -1,6 +1,7 @@
 package by.epam.heritage.ap.repository;
 
 public class DAOException extends Exception {
+
     public DAOException() {}
 
     public DAOException(String message, Throwable cause) {

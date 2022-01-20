@@ -31,35 +31,35 @@ public final class GuestValidator implements Validable {
         char[] password = (request.getParameter(PARAMETER_PASSWORD).toCharArray());
         char[] password2 = (request.getParameter(PARAMETER_PASSWORD2).toCharArray());
 
-        if (!inspectIsValidLogin(login)) {
+        if ( ! inspectIsValidLogin( login)) {
             logger.error("Fail validation login");
             return false;
         }
-        if (!inspectIsValidPassword(password, password2)) {
+        if ( ! inspectIsValidPassword( password, password2)) {
             logger.error("Fail validation password ");
             return false;
         }
-        if (!ValidatorCommon.validateParameterStringClass(surname, PATTERN_NAME)) {
+        if ( ! ValidatorCommon.validateParameterStringClass ( surname, PATTERN_NAME)) {
             logger.error("Fail validation surname ");
             return false;
         }
-        if (!ValidatorCommon.validateParameterStringClass(name, PATTERN_NAME)) {
+        if ( ! ValidatorCommon.validateParameterStringClass ( name, PATTERN_NAME)) {
             logger.error("Fail validation name ");
             return false;
         }
-        if (!ValidatorCommon.validateParameterStringClass(email, PATTERN_EMAIL)) {
+        if ( ! ValidatorCommon.validateParameterStringClass ( email, PATTERN_EMAIL)) {
             logger.error("Fail validation emaily ");
             return false;
         }
-        if (!ValidatorCommon.validateParameterStringClass(phone, PATTERN_PHONE)) {
+        if ( ! ValidatorCommon.validateParameterStringClass ( phone, PATTERN_PHONE)) {
             logger.error("Fail validation phone");
             return false;
         }
-        if (!ValidatorCommon.validateParameterStringClass(country, PATTERN_NAME)) {
+        if ( ! ValidatorCommon.validateParameterStringClass ( country, PATTERN_NAME)) {
             logger.error("Fail validation country ");
             return false;
         }
-        if (!ValidatorCommon.validateParameterStringClass(passport, PATTERN_PASSPORT_NUMBER)) {
+        if ( ! ValidatorCommon.validateParameterStringClass ( passport, PATTERN_PASSPORT_NUMBER)) {
             logger.error("Fail validation passport");
             return false;
         }
@@ -78,31 +78,31 @@ public final class GuestValidator implements Validable {
         String comment = request.getParameter(PARAMETER_COMMENT);
 
 
-        if (!ValidatorCommon.validateParameterStringClass(surname, PATTERN_NAME)) {
+        if ( ! ValidatorCommon.validateParameterStringClass ( surname, PATTERN_NAME)) {
             logger.error("Fail validation surname");
             return false;
         }
-        if (!ValidatorCommon.validateParameterStringClass(name, PATTERN_NAME)) {
+        if ( ! ValidatorCommon.validateParameterStringClass ( name, PATTERN_NAME)) {
             logger.error("Fail validation name ");
             return false;
         }
-        if (!ValidatorCommon.validateParameterStringClass(email, PATTERN_EMAIL)) {
+        if ( ! ValidatorCommon.validateParameterStringClass ( email, PATTERN_EMAIL)) {
             logger.error("Fail validation email ");
             return false;
         }
-        if (!ValidatorCommon.validateParameterStringClass(phone, PATTERN_PHONE)) {
+        if ( ! ValidatorCommon.validateParameterStringClass ( phone, PATTERN_PHONE)) {
             logger.error("Fail validation phone ");
             return false;
         }
-        if (!ValidatorCommon.validateParameterStringClass(comment, PATTERN_COMMENT)) {
+        if ( ! ValidatorCommon.validateParameterStringClass ( comment, PATTERN_COMMENT)) {
             logger.error("Fail validation comment ");
             return false;
         }
-        if (!ValidatorCommon.validateStrinqParameterIntegerClass(roleId, MAXIMUM_ROLE_ID, MINIMUM_ZERO - 1)) {
+        if ( ! ValidatorCommon.validateStrinqParameterIntegerClass ( roleId, MAXIMUM_ROLE_ID, MINIMUM_ZERO - 1)) {
             logger.error("Fail validation role id");
             return false;
         }
-        if (!ValidatorCommon.validateStrinqParameterIntegerClass(idGuest, MAXIMUM_NUMBER_USER_ID, MINIMUM_ZERO)) {
+        if ( ! ValidatorCommon.validateStrinqParameterIntegerClass ( idGuest, MAXIMUM_NUMBER_USER_ID, MINIMUM_ZERO)) {
             logger.error("Fail validation guest id ");
             return false;
         }
@@ -113,7 +113,7 @@ public final class GuestValidator implements Validable {
 
     public boolean inspectIsValidLogin(String login) throws ServiceException {
         Guest guest;
-        if (login == null || !(login.matches(PATTERN_NAME))) {
+        if (login == null || ! (login.matches(PATTERN_NAME))) {
             return false;
         } else {
             GuestDao guestDao = DaoFactory.getInstance().getGuestDao();
@@ -133,11 +133,11 @@ public final class GuestValidator implements Validable {
 
 
     public boolean inspectIsValidPassword(char[] password, char[] password2) {
-        if (password == null || !(password.toString().matches(PATTERN_PASSWORD))) {
+        if (password == null || ! (password.toString().matches(PATTERN_PASSWORD))) {
             logger.error("Password array is equal 0 or is not valid ");
             return false;
         }
-        if (!Arrays.equals(password2, password)) {
+        if ( ! Arrays.equals(password2, password)) {
             logger.error("Password arrays are not equal ");
             return false;
         } else {

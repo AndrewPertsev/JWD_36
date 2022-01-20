@@ -16,31 +16,27 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class TransferDaoImpl implements TransferDao {
-    ConnectionPool connectionPool = ConnectionPool.getInstance();
+    private ConnectionPool connectionPool = ConnectionPool.getInstance();
     private static final Logger logger = LogManager.getLogger(TransferDaoImpl.class);
 
     private static final String FIND_TRANSFER_BY_ID = "SELECT transfer_id, transfer, price_1_km  FROM transfer WHERE transfer_id = ?";
 
 
-    public TransferDaoImpl()  {
+    public TransferDaoImpl() {
     }
-
 
     @Override
     public Transfer findByid(int id) throws DAOException {
+        PreparedStatement statement = null;
+        Connection connection = null;
+        ResultSet rs = null;
         String idString = String.valueOf(id);
         Transfer transfer = new Transfer();
 
-        Connection connection = null;
-        PreparedStatement statement = null;
-        ResultSet rs = null;
         try {
             connection = connectionPool.getConnection();
-            // connection.setAutoCommit(false);
-
             statement = connection.prepareStatement(FIND_TRANSFER_BY_ID);
             statement.setString(1, idString);
-
             rs = statement.executeQuery();
 
             while (rs.next()) {
@@ -63,11 +59,6 @@ public class TransferDaoImpl implements TransferDao {
             }
 
         }
-    }
-
-    @Override
-    public BigDecimal getTransferTotalPrice(int idTransfer, int distance) {
-        return null;
     }
 
     @Override

@@ -18,11 +18,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ApartmentDaoImpl implements ApartmentDao {
-    ConnectionPool connectionPool = ConnectionPool.getInstance();
+    private ConnectionPool connectionPool = ConnectionPool.getInstance();
     private static final Logger logger = LogManager.getLogger(ApartmentDaoImpl.class);
 
     private static final String FIND_APARTMENT_SUITABLE_REQUEST = "SELECT DISTINCT apartments.apartment_id , apartments.category_id, apartments.capacity, apartments.picture , apartments.description FROM apartments INNER JOIN request ON apartments.category_id=(?) LEFT JOIN timesheet ON timesheet.apartment_id=apartments.apartment_id WHERE ((NOT( (?)<=timesheet.reserved_date AND (?)>=timesheet.reserved_date)) OR (timesheet.reserved_date IS NULL )) AND apartments.capacity>=(?)";
-    private final static String FIND_APARTMENT_BY_ID = "SELECT apartment_id , category_id, capacity, picture , description  FROM apartments where apartment_id=?";
+    private final static String FIND_APARTMENT_BY_ID = "SELECT apartment_id , category_id, capacity, picture , description  FROM apartments WHERE apartment_id=?";
     private final static String FIND_ALL_APARTMENT = "SELECT apartment_id, category_id, capacity ,picture , description  FROM apartments";
     private static final String INSERT_NEW_APARTMENT = "INSERT INTO hotelappdb.apartments (category_id, capacity, picture, description, apartment_id) VALUES (?,?,?,?,?)";
     private static final String UPDATE_APARTMENT = "UPDATE hotelappdb.apartments SET  category_id = ?,capacity = ?, picture =?, description = ? WHERE (apartment_id = ?)";
@@ -46,8 +46,6 @@ public class ApartmentDaoImpl implements ApartmentDao {
 
         try {
             connection = connectionPool.getConnection();
-            // connection.setAutoCommit(false);
-
             statement = connection.prepareStatement(UPDATE_APARTMENT);
 
             statement.setInt(1, category);
@@ -62,7 +60,6 @@ public class ApartmentDaoImpl implements ApartmentDao {
             done = false;
             logger.error("Element does not found ", e);
             throw new DAOException(e);
-
         } finally {
             try {
                 connectionPool.closeConnection(connection, statement);
@@ -77,9 +74,8 @@ public class ApartmentDaoImpl implements ApartmentDao {
     @Override
     public List<Apartment> findApartmentsSuitableForRequest(Request request) throws DAOException {
         List<Apartment> suitableApartments = new ArrayList<>(0);
-
-        Connection connection = null;
         PreparedStatement statement = null;
+        Connection connection = null;
         ResultSet rs = null;
 
         try {
@@ -90,7 +86,6 @@ public class ApartmentDaoImpl implements ApartmentDao {
             statement.setString(2, String.valueOf(request.getStart()));
             statement.setString(3, String.valueOf(request.getEnd()));
             statement.setString(4, String.valueOf(request.getQuantity()));
-            // statement.setString(5, String.valueOf(request.getQuantity()));
 
             rs = statement.executeQuery();
 
@@ -110,7 +105,6 @@ public class ApartmentDaoImpl implements ApartmentDao {
         } catch (SQLException | PoolException e) {
             logger.error("Element does not found ", e);
             throw new DAOException(e);
-
         } finally {
             try {
                 connectionPool.closeConnection(connection, statement, rs);
@@ -124,16 +118,14 @@ public class ApartmentDaoImpl implements ApartmentDao {
 
     @Override
     public List<Apartment> findAll() throws DAOException {
-        List<Apartment> rooms = new ArrayList<>(0);
-
-        Connection connection = null;
         PreparedStatement statement = null;
+        Connection connection = null;
         ResultSet rs = null;
+        List<Apartment> rooms = new ArrayList<>(0);
 
         try {
             connection = connectionPool.getConnection();
             statement = connection.prepareStatement(FIND_ALL_APARTMENT);
-
             rs = statement.executeQuery();
 
             while (rs.next()) {
@@ -166,20 +158,16 @@ public class ApartmentDaoImpl implements ApartmentDao {
 
     @Override
     public Apartment findByid(int id) throws DAOException {
-        Apartment apartment = new Apartment();
-        String idSearch = String.valueOf(id);
-
-        Connection connection = null;
         PreparedStatement statement = null;
+        Connection connection = null;
         ResultSet rs = null;
+        String idSearch = String.valueOf(id);
+        Apartment apartment = new Apartment();
 
         try {
             connection = connectionPool.getConnection();
-            // connection.setAutoCommit(false);
-
             statement = connection.prepareStatement(FIND_APARTMENT_BY_ID);
             statement.setString(1, idSearch);
-
             rs = statement.executeQuery();
 
             while (rs.next()) {
@@ -221,7 +209,6 @@ public class ApartmentDaoImpl implements ApartmentDao {
 
         try {
             connection = connectionPool.getConnection();
-            // connection.setAutoCommit(false);
             statement = connection.prepareStatement(UPDATE_APARTMENT);
 
             statement.setInt(1, category);
@@ -256,11 +243,8 @@ public class ApartmentDaoImpl implements ApartmentDao {
 
         try {
             connection = connectionPool.getConnection();
-            // connection.setAutoCommit(false);
-
             statement = connection.prepareStatement(DELETE_APARTMENT_BY_ID);
             statement.setInt(1, id);
-
             statement.executeUpdate();
 
         } catch (SQLException | PoolException e) {
@@ -294,8 +278,6 @@ public class ApartmentDaoImpl implements ApartmentDao {
 
         try {
             connection = connectionPool.getConnection();
-            // connection.setAutoCommit(false);
-
             statement = connection.prepareStatement(INSERT_NEW_APARTMENT);
 
             statement.setInt(1, category);
@@ -323,39 +305,4 @@ public class ApartmentDaoImpl implements ApartmentDao {
     }
 
 }
-
-//       private static final String UPDATE_APARTMENT_DESCRIPTION = "UPDATE hotelappdb.apartments SET  description = ? WHERE (apartment_id = ?)";
-//    public boolean updateDescription(int id, String description) throws DAOException {
-//        boolean done =true;
-//        Connection connection = null;
-//        PreparedStatement statement = null;
-//
-//        try {
-//            connection = connectionPool.getConnection();
-//            // connection.setAutoCommit(false);
-//
-//            statement = connection.prepareStatement(UPDATE_APARTMENT_DESCRIPTION);
-//
-//            statement.setString(1, description);
-//            statement.setInt(2, id);
-//
-//            statement.executeUpdate();
-//
-//        } catch (SQLException | PoolException e) {
-//            done=false;
-//            logger.error("Element does not found ", e);
-//            throw new DAOException(e);
-//
-//        } finally {
-//            try {
-//                connectionPool.closeConnection(connection, statement);
-//            } catch (PoolException e) {
-//                logger.error("Can't close connection ", e);
-//                throw new DAOException(e);
-//            }
-//            return done;
-//        }
-//    }
-//
-//
 

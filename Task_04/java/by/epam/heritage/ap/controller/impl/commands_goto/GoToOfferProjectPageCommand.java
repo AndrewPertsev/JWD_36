@@ -1,6 +1,5 @@
 package by.epam.heritage.ap.controller.impl.commands_goto;
 
-import by.epam.heritage.ap.controller.CommandException;
 import by.epam.heritage.ap.controller.Commandable;
 import by.epam.heritage.ap.model.Apartment;
 import by.epam.heritage.ap.model.Offer;
@@ -13,60 +12,66 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static by.epam.heritage.ap.controller.ConstantsParametersAndAttributes.ATTRIBUTE_OFFERS;
-import static by.epam.heritage.ap.controller.ConstantsParametersAndAttributes.PARAMETER_REQUEST_ID;
+import static by.epam.heritage.ap.controller.ConstantsCommandPath.PATH_GO_TO_OFFER_PROJECT_PAGE;
+import static by.epam.heritage.ap.controller.ConstantsParametersAndAttributes.*;
 
 public class GoToOfferProjectPageCommand implements Commandable {
     private static final Logger logger = LogManager.getLogger(GoToOfferProjectPageCommand.class);
 
     @Override
-    public void execute(HttpServletRequest request, HttpServletResponse response) throws CommandException, ServletException, IOException {
-        Request requestGuest;
-        int idRequestGuestInt;
-        String idRequestGuest;
+    public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Offer offer = null;
+        String idRequestGuest;
+        int idRequestGuestInt = 0;
+        Request requestGuest = null;
         List<Offer> offers = new ArrayList<>(0);
         List<Apartment> suitableApartments = new ArrayList<>(0);
 
         OfferServiceable offerService = ServiceFactory.getInstance().getOfferService();
-        ApartmentServiceable apartmentService = ServiceFactory.getInstance().getApartmentService();
         RequestServiceable requestService = ServiceFactory.getInstance().getRequestService();
+        ApartmentServiceable apartmentService = ServiceFactory.getInstance().getApartmentService();
 
         idRequestGuest = request.getParameter(PARAMETER_REQUEST_ID);
-        idRequestGuestInt = Integer.parseInt(idRequestGuest);
-
         request.setAttribute(PARAMETER_REQUEST_ID, idRequestGuest);
 
         try {
-            requestGuest =  requestService.findByid(idRequestGuestInt);
+            idRequestGuestInt = Integer.parseInt(idRequestGuest);
+            requestGuest = requestService.findByid(idRequestGuestInt);
         } catch (ServiceException e) {
-            throw new CommandException(e);
+            logger.error("Can't execute request to database", e);
+            request.setAttribute(ATTRIBUTE_MESSAGE_FAIL, MESSAGE_DATABASE_ERROR);
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
 
         try {
             suitableApartments = apartmentService.findApartmentsSuitableForRequest(requestGuest);
         } catch (ServiceException e) {
-            throw new CommandException(e);
+            logger.error("Can't execute request to database", e);
+            request.setAttribute(ATTRIBUTE_MESSAGE_FAIL, MESSAGE_DATABASE_ERROR);
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
+
 
         for (int i = 0; i < suitableApartments.size(); i++) {
             int tempId = suitableApartments.get(i).getApartmentId();
-
             try {
                 offer = offerService.assembleOfferForApartment(tempId, idRequestGuestInt);
             } catch (ServiceException e) {
-                throw new CommandException(e);
+                logger.error("Can't execute request to database", e);
+                request.setAttribute(ATTRIBUTE_MESSAGE_FAIL, MESSAGE_DATABASE_ERROR);
+                response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             }
             offers.add(offer);
         }
+
+
         request.setAttribute(ATTRIBUTE_OFFERS, offers);
 
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/view/offer_project.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher(PATH_GO_TO_OFFER_PROJECT_PAGE);
         dispatcher.forward(request, response);
     }
 }

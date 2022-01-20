@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 public class Request extends Entity implements Serializable {
+    private static final long serialVersionUID = 1L;
     private int requestId;
     private int guestId;
     private int quantity;
@@ -17,7 +18,8 @@ public class Request extends Entity implements Serializable {
     private LocalDate dateRequest;
     private boolean isResponded;
 
-    public Request(){};
+    public Request() {
+    }
 
     public Request(int requestId, int guestId, int quantity, int category, int menu, int transfer, int distance, LocalDate start, LocalDate end, LocalDate dateRequest, boolean isResponded) {
         this.requestId = requestId;

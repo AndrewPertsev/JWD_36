@@ -1,6 +1,5 @@
 package by.epam.heritage.ap.controller.impl;
 
-import by.epam.heritage.ap.controller.CommandException;
 import by.epam.heritage.ap.controller.Commandable;
 import by.epam.heritage.ap.model.Apartment;
 import by.epam.heritage.ap.service.ServiceException;
@@ -14,39 +13,37 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-import static by.epam.heritage.ap.controller.ConstantsParametersAndAttributes.MESSAGE_WELCOME;
+import static by.epam.heritage.ap.controller.ConstantsParametersAndAttributes.*;
 
 public class AddApartmentCommand implements Commandable {
     private static final Logger logger = LogManager.getLogger(AddApartmentCommand.class);
 
     @Override
-    public void execute(HttpServletRequest request, HttpServletResponse response) throws CommandException, IOException, ServletException, ServiceException {
-
+    public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         Apartment apartmentValidated = null;
 
         try {
             apartmentValidated = BuilderFactory.getInstance().getApartmentBuilder().create(request);
         } catch (ValidatorException e) {
-            throw new CommandException(e);
+            logger.error("Can't validate incoming data", e);
+            request.setAttribute(ATTRIBUTE_MESSAGE_FAIL, MESSAGE_INVALID_DATA);
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST);
         }
 
         Serviceable apartmentService = ServiceFactory.getInstance().getApartmentService();
-        apartmentService.add(apartmentValidated);
-        response.sendRedirect("Controller?command=GO_TO_APARTMENT_MANAGEMENT_PAGE&start=" + MESSAGE_WELCOME);
+        try {
+            apartmentService.add(apartmentValidated);
+        } catch (ServiceException e) {
+            logger.error("Can't execute request to database", e);
+            request.setAttribute(ATTRIBUTE_MESSAGE_FAIL, MESSAGE_DATABASE_ERROR);
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+        }
+
+
+        response.sendRedirect("Controller?" + PARAMETER_COMMAND + "=GO_TO_APARTMENT_MANAGEMENT_PAGE&start=" + MESSAGE_SUCCESS);
 
     }
 }
 
-//        String idApartmentParam = request.getParameter("apartmentId");/////////////////////////
-//        String categoryParam = request.getParameter("category");
-//        String capacityParam = request.getParameter("capacity");
-//        String description = request.getParameter("description");
-//        String pathToPicture = request.getParameter("pathToPicture");
-//        System.out.println("__________UPDate apart id " + idApartmentParam);
-//        System.out.println("capacity " + capacityParam);
-//        System.out.println("category " + categoryParam);
-//        System.out.println("pathToPicture " + pathToPicture);
-//        System.out.println("description " + description);

@@ -7,7 +7,6 @@ public final class ServiceFactory {
     private static final ServiceFactory instance = new ServiceFactory();
 
     private ApartmentServiceable apartmentService = new ApartmentServiceImpl();
-    private ManagerServiceable managerService = new ManagerServiceImpl();
     private RequestServiceable requestService = new RequestServiceImpl();
     private GuestServiceable guestService = new GuestServiceImpl();
     private OfferServiceable offerService = new OfferServiceImpl();
@@ -40,8 +39,5 @@ public final class ServiceFactory {
 
     public OfferServiceable getOfferService() { return offerService; }
 
-    public ManagerServiceable getManagerService() {
-        return managerService;
-    }
 
 }

@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 import static by.epam.heritage.ap.controller.ConstantsParametersAndAttributes.PARAMETER_COMMAND;
-import static by.epam.heritage.ap.controller.ConstantsParametersAndAttributes.PARAMETER_LOCALE_COMMON;
 
 public class Controller extends HttpServlet {
     private static final Logger logger = LogManager.getLogger(Controller.class);
@@ -25,7 +24,8 @@ public class Controller extends HttpServlet {
         try {
             ConnectionPool.getInstance().init();
         } catch (PoolException e) {
-            throw new RuntimeException("Connection pool not initialized ");
+            logger.error("Connection pool does not initialized ", e);
+            throw new RuntimeException("Connection pool does not initialized ", e);
         }
     }
 
@@ -36,46 +36,39 @@ public class Controller extends HttpServlet {
     }
 
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) {
-
-        request.getSession(true).setAttribute(PARAMETER_LOCALE_COMMON, request.getParameter(PARAMETER_LOCALE_COMMON));
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         try {
             process(request, response);
-        } catch (ControllerException e) {
-            logger.error("Element does not found ", e);
-            e.printStackTrace();
+        } catch (IOException e) {
+            logger.error("Controller exception ", e);
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST);
         }
 
     }
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         try {
             process(request, response);
-        } catch (ControllerException e) {
-            e.printStackTrace();
+        } catch (IOException e) {
+            logger.error("Controller exception ", e);
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST);
         }
 
     }
 
-    private void process(HttpServletRequest request, HttpServletResponse response) throws ControllerException {
+    private void process(HttpServletRequest request, HttpServletResponse response) throws IOException {
         Commandable command = null;
         String commandName = request.getParameter(PARAMETER_COMMAND);
 
-        try {
             command = providerCommand.getCommands(commandName);
-        } catch (CommandException e) {
-            throw new ControllerException(e);
-        }
-
 
         try {
             command.execute(request, response);
-        } catch (CommandException e) {
-            e.printStackTrace();
-        } catch (IOException | ServletException | ServiceException e) {
-            e.printStackTrace();
+        } catch ( IOException | ServletException  e) {
+            logger.error("Controller exception ", e);
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST);
         }
     }
 }

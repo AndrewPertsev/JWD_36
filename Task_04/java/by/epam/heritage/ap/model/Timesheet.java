@@ -5,12 +5,14 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 public class Timesheet extends Entity implements Serializable {
+    private static final long serialVersionUID = 1L;
     private int timesheetId;
     private int apartmentId;
     private boolean isReserved;
     private LocalDate reservedDate;
 
-    public Timesheet(){};
+    public Timesheet() {
+    }
 
     public Timesheet(int timesheetId, int apartmentId, boolean isReserved, LocalDate reservedDate) {
         this.timesheetId = timesheetId;
