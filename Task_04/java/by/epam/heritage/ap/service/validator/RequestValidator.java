@@ -26,24 +26,24 @@ public final class RequestValidator implements Validable {
         String menu = request.getParameter(PARAMETER_MENU);
 
 
-        if (! inspectIsValidRequestBookingDate( dateIn, dateout)) {
+        if (!inspectIsValidRequestBookingDate(dateIn, dateout)) {
             logger.error("Fail validation date ");
             return false;
         }
 
-        if ( ! ValidatorCommon.validateStrinqParameterIntegerClass ( quantity, MAXIMUM_QUANTITY_PERSONS, MINIMUM_ZERO)) {
+        if (!ValidatorCommon.validateStringParameterIntegerClass(quantity, MAXIMUM_QUANTITY_PERSONS, MINIMUM_ZERO)) {
             logger.error("Fail validation quantity ");
             return false;
         }
-        if ( ! ValidatorCommon.validateStrinqParameterIntegerClass ( category, MAXIMUM_CATEGORY_NUMBER_APARTMENT, MINIMUM_ZERO)) {
+        if (!ValidatorCommon.validateStringParameterIntegerClass(category, MAXIMUM_CATEGORY_NUMBER_APARTMENT, MINIMUM_ZERO)) {
             logger.error("Fail validation category ");
             return false;
         }
-        if ( ! ValidatorCommon.validateStrinqParameterIntegerClass ( transfer, MAXIMUM_TRANSFER_ID, MINIMUM_ZERO)) {
+        if (!ValidatorCommon.validateStringParameterIntegerClass(transfer, MAXIMUM_TRANSFER_ID, MINIMUM_ZERO)) {
             logger.error("Fail validation transfer id ");
             return false;
         }
-        if ( ! ValidatorCommon.validateStrinqParameterIntegerClass ( menu, MAXIMUM_MENU_ID, MINIMUM_ZERO)) {
+        if (!ValidatorCommon.validateStringParameterIntegerClass(menu, MAXIMUM_MENU_ID, MINIMUM_ZERO)) {
             logger.error("Fail validation menu id ");
             return false;
         }
@@ -55,11 +55,15 @@ public final class RequestValidator implements Validable {
 
     @Override
     public boolean checkUpdatedEntityIsValid(HttpServletRequest request) throws ValidatorException {
+        boolean isValid = true;
         String idRequest = request.getParameter(PARAMETER_REQUEST_ID);
-        boolean isValid = false;
 
-        isValid = inspectIsValidRequestIdToUpdateRequest( idRequest);
-        if ( ! isValid) {
+        if (!ValidatorCommon.validateStringParameterIntegerClass(idRequest, MAXIMUM_NUMBER_REQUEST, MINIMUM_ZERO)) {
+            return false;
+        }
+
+        isValid = inspectIsValidRequestIdToUpdateRequest(idRequest);
+        if (!isValid) {
             logger.error("Fail validation request id ");
             return false;
         }
@@ -70,6 +74,11 @@ public final class RequestValidator implements Validable {
 
 
     public boolean inspectIsValidRequestIdToUpdateRequest(String idRequest) throws ValidatorException {
+
+        if (!ValidatorCommon.validateStringParameterIntegerClass(idRequest, MAXIMUM_NUMBER_USER_ID, MINIMUM_ZERO)) {
+            return false;
+        }
+
         int maximumRequestId;
         RequestServiceable requestService = ServiceFactory.getInstance().getRequestService();
 
@@ -79,7 +88,7 @@ public final class RequestValidator implements Validable {
             logger.error("Service can't find max id request ");
             throw new ValidatorException(e);
         }
-        if ( ! ValidatorCommon.validateStrinqParameterIntegerClass ( idRequest, maximumRequestId, MINIMUM_ZERO)) {
+        if (!ValidatorCommon.validateStringParameterIntegerClass(idRequest, maximumRequestId, MINIMUM_ZERO)) {
             return false;
         }
 
@@ -90,13 +99,21 @@ public final class RequestValidator implements Validable {
     public boolean inspectIsValidRequestBookingDate(String startDate, String endDate) {
         LocalDate start;
         LocalDate end;
-
         if (startDate == null || startDate == "") {
             logger.error("Service can't validate start date ");
             return false;
         }
         if (endDate == null || endDate == "") {
             logger.error("Service can't validate start date ");
+            return false;
+        }
+
+        if (! startDate.matches(PATTERN_DATE)) {
+            logger.error("Service can't validate start date ");
+            return false;
+        }
+        if (! endDate.matches(PATTERN_DATE)) {
+            logger.error("Service can't validate end date ");
             return false;
         }
         start = LocalDate.parse(startDate);

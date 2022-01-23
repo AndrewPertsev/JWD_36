@@ -14,34 +14,34 @@
 
 <html>
 <head>
-    <title>GUEST ROOM</title>
+    <title><fmt:message key="header.common.my_page"/></title>
 </head>
 <body>
 <jsp:include page="/WEB-INF/view/common/header_common.jsp"/>
 
-<p>Dear <c:out value="${userName}"/> <c:out value="${userSurName}"/>, you have id <c:out value="${userId}"/>
+<p><fmt:message key="guest.Dear"/> <c:out value="${userName}"/> <c:out value="${userSurName}"/>, <fmt:message key="guest.you_have_id"/> <c:out value="${userId}"/>
     ${(sessionScope.userVIP == true) ? ' and  VIP status.' :  '.'  }
     <%--    <c:if test="${userVIP == true}"> and VIP status--%>
     <%--    </c:if>--%>
 </p>
 
 <div class="container">
-    <h2>Mr. ${sessionScope.userName}, here your offers: </h2>
-    <p>This table shows list of yours offers</p>
+    <h2><fmt:message key="guest.Mr."/> ${sessionScope.userName}, <fmt:message key="guest.here_your_offers"/></h2>
+    <p><fmt:message key="guest.header_second"/></p>
     <div class="table-responsive-sm" class="scrollable" style="overflow-y: scroll;">
         <table class="table-condensed table table-hover table-bordered  fixtable" id="TABLE" class="display"
                style="width:100%">
             <thead>
             <tr align="center">
-                <th>id</th>
-                <th>Offer id</th>
-                <th>Quantity Persons</th>
-                <th>Check-in</th>
-                <th>Check-out</th>
-                <th>Apartment №</th>
-                <th>Menu</th>
-                <th>Transfer</th>
-                <th>Total price</th>
+                <th><fmt:message key="registration.edit.id"/></th>
+                <th><fmt:message key="guest.offer_id"/></th>
+                <th><fmt:message key="request.management.Quantity"/></th>
+                <th><fmt:message key="request.Check-in"/></th>
+                <th><fmt:message key="request.Check-out"/></th>
+                <th><fmt:message key="offer.project.Apartment_id"/></th>
+                <th><fmt:message key="request.Menu"/></th>
+                <th><fmt:message key="request.Transfer"/></th>
+                <th><fmt:message key="offer.project.Total_price"/></th>
                 <%--                <th>confirmed</th>--%>
             </thead>
             <tbody>
@@ -57,18 +57,18 @@
                     <td><c:out value="${z.end}"/></td>
                     <td><c:out value="${z.apartmentId}"/></td>
                     <td><c:choose>
-                        <c:when test="${z.menu== 1}">Breakfast only</c:when>
-                        <c:when test="${z.menu== 2}"> Half-board</c:when>
-                        <c:when test="${z.menu== 3}">All Inclusive</c:when>
-                        <c:when test="${z.menu== 4}">Ultra All Inclusive</c:when>
+                        <c:when test="${z.menu== 1}"><fmt:message key="request.Menu.Breakfast_only"/> </c:when>
+                        <c:when test="${z.menu== 2}"><fmt:message key="request.Menu.Half-board"/> </c:when>
+                        <c:when test="${z.menu== 3}"><fmt:message key="request.Menu.All_Inclusive"/> </c:when>
+                        <c:when test="${z.menu== 4}"><fmt:message key="request.Menu.Ultra_All_Inclusive"/></c:when>
                         <c:otherwise>"EMPTY"!</c:otherwise>
                     </c:choose>
                     </td>
                     <td><c:choose>
-                        <c:when test="${z.transfer== 1}">Shuttle</c:when>
-                        <c:when test="${z.transfer== 2}">Taxi</c:when>
-                        <c:when test="${z.transfer== 3}">Vip car</c:when>
-                        <c:when test="${z.transfer== 4}">Helicopter</c:when>
+                        <c:when test="${z.transfer== 1}"><fmt:message key="request.Transfer.Shuttle"/> </c:when>
+                        <c:when test="${z.transfer== 2}"><fmt:message key="request.Transfer.Taxi"/> </c:when>
+                        <c:when test="${z.transfer== 3}"><fmt:message key="request.Transfer.Vip_car"/> </c:when>
+                        <c:when test="${z.transfer== 4}"><fmt:message key="request.Transfer.Helicopter"/></c:when>
                         <c:otherwise>"EMPTY"!</c:otherwise>
                     </c:choose>
                     </td>

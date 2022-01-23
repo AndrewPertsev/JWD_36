@@ -26,7 +26,7 @@ public class ApartmentDaoImpl implements ApartmentDao {
     private final static String FIND_ALL_APARTMENT = "SELECT apartment_id, category_id, capacity ,picture , description  FROM apartments";
     private static final String INSERT_NEW_APARTMENT = "INSERT INTO hotelappdb.apartments (category_id, capacity, picture, description, apartment_id) VALUES (?,?,?,?,?)";
     private static final String UPDATE_APARTMENT = "UPDATE hotelappdb.apartments SET  category_id = ?,capacity = ?, picture =?, description = ? WHERE (apartment_id = ?)";
-    private static final String DELETE_APARTMENT_BY_ID = "DELETE FROM hotelappdb.apartments WHERE apartments.apartment_id = ?)";
+    private static final String DELETE_APARTMENT_BY_ID = "DELETE FROM hotelappdb.apartments WHERE apartments.apartment_id = ?";
 
     public ApartmentDaoImpl() {
     }
@@ -115,6 +115,8 @@ public class ApartmentDaoImpl implements ApartmentDao {
 
         }
     }
+
+
 
     @Override
     public List<Apartment> findAll() throws DAOException {

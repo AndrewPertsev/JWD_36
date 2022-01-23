@@ -28,7 +28,7 @@ public class OfferServiceImpl implements OfferServiceable {
         boolean done = true;
         OfferDao offerDao = DaoFactory.getInstance().getOfferDao();
         try {
-            done = offerDao.add((Offer) entity);
+            done = offerDao.add(entity);
         } catch (DAOException e) {
             logger.error("Service can't add element ", e);
             throw new ServiceException(e);
@@ -109,6 +109,19 @@ public class OfferServiceImpl implements OfferServiceable {
         return offers;
     }
 
+    @Override
+    public boolean update(Offer entity) throws ServiceException {
+        boolean done = true;
+        OfferDao offerDao = DaoFactory.getInstance().getOfferDao();
+        try {
+            done = offerDao.update(entity);
+        } catch (DAOException e) {
+            logger.error("Service can't update element ", e);
+            throw new ServiceException(e);
+        }
+        return done;
+    }
+
 
     @Override
     public Offer assembleOfferForApartment(int suitableApartmentId, int requestId) throws ServiceException {
@@ -155,8 +168,5 @@ public class OfferServiceImpl implements OfferServiceable {
         return false;
     }
 
-    @Override
-    public boolean update(Offer entity) throws ServiceException {
-        return false;
-    }
+
 }

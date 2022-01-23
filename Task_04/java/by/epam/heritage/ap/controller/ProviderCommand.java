@@ -21,17 +21,16 @@ public final class ProviderCommand {
         commands.put(REQUEST, new RequestCommand());
         commands.put(SHOW_GUEST_DATA, new ShowGuestData());
         commands.put(REGISTRATION, new RegistrationCommand());
-        commands.put(UPDATE_GUEST, new UpdateGuestDataCommand());
         commands.put(DELETE_REQUEST, new DeleteRequestCommand());
         commands.put(ADD_APARTMENT, new AddApartmentCommand());
-        commands.put(UPDATE_REQUEST, new UpdateRequestDataCommand());
-        commands.put(SWITCH_LANGUAGE, new SwitchLanguageCommand());
+        commands.put(UPDATE_GUEST, new UpdateGuestDataCommand());
         commands.put(DELETE_APARTMENT, new DeleteApartmentCommand());
-        commands.put(UPDATE_APARTMENT, new UpdateApartmentDataCommand());
+        commands.put(UPDATE_REQUEST, new UpdateRequestDataCommand());
         commands.put(PUSH_OFFER_TO_USER, new PushOfferToUserCommand());
-        commands.put(SET_OFFER_PAID_STATUS, new SetOfferPaidStatusCommand());
-        commands.put(RESERVE_CONFIRMED_DAYS, new ReserveConfirmedDaysCommand());
-        commands.put(SET_OFFER_CLOSED_STATUS, new SetOfferClosedStatusCommand());
+        commands.put(CLOSE_GUEST_SESSION, new CloseGuestSessionCommand());
+        commands.put(UPDATE_APARTMENT, new UpdateApartmentDataCommand());
+        commands.put(UPDATE_OFFER_STATUS, new UpdateOfferStatusAndPriceCommand());
+        commands.put(FIND_REQUESTS_UNRESPONDED_STATUS_ONLY, new FindUnrespondedRequestsCommand());
 
 
         commands.put(GO_TO_MAIN_PAGE, new GoToMainPageCommand());

@@ -21,15 +21,15 @@ public final class ApartmentValidator implements Validable {
         String pathToPicture = request.getParameter(PARAMETER_PATH_TO_PICTURE);
         // .setPrice(BigDecimal.valueOf(Long.valueOf(request.getParameter("price")));
 
-        if ( ! ValidatorCommon.validateStrinqParameterIntegerClass ( idApartmentParam, MAXIMUM_NUMBER_APARTMENT, MINIMUM_ZERO)) {
+        if ( !ValidatorCommon.validateStringParameterIntegerClass(idApartmentParam, MAXIMUM_NUMBER_APARTMENT, MINIMUM_ZERO)) {
             logger.error("Fail validation id apartment ");
             return false;
         }
-        if ( ! ValidatorCommon.validateStrinqParameterIntegerClass ( capacityParam, MAXIMUM_CAPACITY_APARTMENT, MINIMUM_ZERO)) {
+        if ( ! ValidatorCommon.validateStringParameterIntegerClass( capacityParam, MAXIMUM_CAPACITY_APARTMENT, MINIMUM_ZERO)) {
             logger.error("Fail validation capacity ");
             return false;
         }
-        if ( ! ValidatorCommon.validateStrinqParameterIntegerClass ( categoryParam, MAXIMUM_CATEGORY_NUMBER_APARTMENT, MINIMUM_ZERO)) {
+        if ( ! ValidatorCommon.validateStringParameterIntegerClass( categoryParam, MAXIMUM_CATEGORY_NUMBER_APARTMENT, MINIMUM_ZERO)) {
             logger.error("Fail validation category ");
             return false;
         }

@@ -17,6 +17,14 @@
 <body>
 <jsp:include page="/WEB-INF/view/common/header_common.jsp"/>
 
+
+<%String messageFail = request.getParameter("message_fail");
+    if (messageFail != null) {%>
+<h4 style="color:#de1212"><fmt:message key="message.fail"/><%}%></h4>
+<%String messageSuccess = request.getParameter("message_success");
+    if (messageSuccess != null) {%>
+<h4 style="color:#1bb7b1"><fmt:message key="message.success"/><%}%></h4>
+
 <%--------------------UPDATE POP UP------------------------%>
 
 <div class="modal fade" id="UPDATE_Element" tabindex="-1" role="dialog" aria-labelledby="1"
@@ -28,71 +36,98 @@
                     <form action="Controller" method="post">
                         <input type="hidden" name="command" value="UPDATE_GUEST">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="1">Update guest data</h5>
+                            <h5 class="modal-title" id="1"><fmt:message key="guest.Update_guest_data"/></h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
 
                         <div class="form-group-sm">
-                            <label>Number</label>
+                            <label><fmt:message key="registration.edit.id"/>
+                            </label>
                             <input type="text" class="form-control" required autofocus
                                    id="guestId"
                                    name="guestId">
                         </div>
 
                         <div class="form-group-sm">
-                            <label>Role</label>
+                            <label><fmt:message key="registration.edit.roleId"/></label>
                             <input type="text" class="form-control" required autofocus
                                    id="roleId"
                                    name="roleId">
                         </div>
                         <div class="form-group-sm">
-                            <label>Name</label>
+                            <label><fmt:message key="registration.name"/></label>
                             <input type="text" class="form-control" required autofocus
                                    id="name"
                                    name="name">
                         </div>
                         <div class="form-group-sm">
-                            <label>Surname</label>
+                            <label><fmt:message key="registration.surname"/></label>
                             <input type="text" class="form-control" required autofocus
                                    id="surname"
                                    name="surname">
                         </div>
                         <div class="form-group-sm">
-                            <label>Email</label>
+                            <label><fmt:message key="registration.email"/></label>
                             <input type="text" class="form-control" required autofocus
                                    id="email"
                                    name="email">
                         </div>
+
                         <div class="form-group-sm">
-                            <label>Phone</label>
+                            <label><fmt:message key="registration.phone"/></label>
                             <input type="text" class="form-control" required autofocus
                                    id="phone"
                                    name="phone">
                         </div>
 
-                        <div class="form-check">
-                            <input type="checkbox" class="form-check-input active" id="isVip" name="isVip"
-                                   placeholder="check VIP" value="true">
-                            <label class="form-check-label active" for="isVip">VIP</label></div>
-
-                        <div class="form-check">
-                            <input type="checkbox" class="form-check-input active" id="isNonGrata" name="isNonGrata"
-                                   placeholder="check status" value="true">
-                            <label class="form-check-label active" for="isNonGrata">NON GRATA!!!</label></div>
+                        <div class="form-group">
+                            <label for="isVip"><fmt:message key="registration.edit.vip"/></label>
+                            <select class="form-control setMargin" id="isVip" name="isVip" class="col-sm-4" type="text"
+                                    required autofocus>
+                                <option value="false"><fmt:message key="guest.No_status"/></option>
+                                <option value="true">VIP client</option>
+                            </select>
+                        </div>
 
                         <div class="form-group">
-                            <label>Comment</label>
+                            <label for="isNonGrata"><fmt:message key="registration.edit.nongrata"/></label>
+                            <select class="form-control setMargin" id="isNonGrata" name="isNonGrata" class="col-sm-4"
+                                    type="text"
+                                    required autofocus>
+                                <option value="false"><fmt:message key="guest.No_status"/></option>
+                                <option value="true">NON GRATA!!!</option>
+                            </select>
+                        </div>
+
+                        <%--                        <div class="form-check">--%>
+                        <%--                            <input type="checkbox" class="form-check-input active" id="isVip" name="isVip"--%>
+                        <%--                                   placeholder="check VIP" value="true">--%>
+                        <%--                            <label class="form-check-label active" for="isVip"><fmt:message key="registration.edit.vip"/>--%>
+                        <%--                            </label></div>--%>
+
+                        <%--                        <div class="form-check">--%>
+                        <%--                            <input type="checkbox" class="form-check-input active" id="isNonGrata" name="isNonGrata"--%>
+                        <%--                                   placeholder="check status" value="true">--%>
+                        <%--                            <label class="form-check-label active" for="isNonGrata"><fmt:message key="registration.edit.nongrata"/>--%>
+                        <%--                            </label></div>--%>
+
+                        <div class="form-group">
+                            <label><fmt:message key="registration.edit.comment"/>
+                            </label>
                             <textarea class="form-control" id="comment" name="comment"
                             ></textarea>
                         </div>
 
                         <div class="modal-footer">
                             <button type="button" class="btn btn-outline-secondary  badge-pill" data-dismiss="modal">
-                                Close
+                                <fmt:message key="button.commands.close"/>
+
                             </button>
-                            <button type="submit" class="btn btn-outline-info  badge-pill" name="UpdateData">UPDATE
+                            <button type="submit" class="btn btn-outline-info  badge-pill" name="UpdateData">
+                                <fmt:message key="button.commands.update"/>
+
                             </button>
                         </div>
                     </form>
@@ -184,14 +219,14 @@
                 <form action="Controller" method="delete">
                     <input type="hidden" name="command" value="DELETE_GUEST">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="2">Are you sure to delete guest?</h5>
+                        <h5 class="modal-title" id="2"><fmt:message key="button.commands.Are_you_sure_to_delete"/></h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
 
                     <div class="form-group-sm">
-                        <label>Number</label>
+                        <label><fmt:message key="registration.edit.id"/></label>
                         <input type="text" class="form-control" required autofocus
                                id="idDelete"
                                name="guestId">
@@ -199,9 +234,11 @@
 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-outline-secondary  badge-pill" data-dismiss="modal">
-                            NO, close
+                            <fmt:message key="button.commands.close"/>
+
                         </button>
-                        <button type="submit" class="btn btn-outline-danger  badge-pill" name="DELETEDATA">YES, DELETE
+                        <button type="submit" class="btn btn-outline-danger  badge-pill" name="DELETEDATA"><fmt:message
+                                key="button.commands.delete"/>
                         </button>
                     </div>
                 </form>
@@ -215,24 +252,25 @@
 
 <div class="container">
     <h2><fmt:message key="header.common.guests"/></h2>
-    <p>This table shows list of all our users
+    <p><fmt:message key="guests.header.second"/>
         <a type="button" href="Controller?command=GO_TO_GUEST_MANAGEMENT_PAGE" button
-           class="btn btn-outline-info  btn-sm badge-pill ">Show all guests</a>
+           class="btn btn-outline-info  btn-sm badge-pill "><fmt:message
+                key="button.commands.guests.Show_all_guests"/></a>
     </p>
     <div class="table-responsive table-sm" class="scrollable" style="overflow-y: scroll;">
         <table class="table-condensed table table-hover table-bordered  fixtable" id="TABLE" class="display">
             <thead>
             <tr align="center">
-                <th>Id</th>
-                <th>RoleId</th>
-                <th>Name</th>
-                <th>Surname</th>
-                <th>Email</th>
-                <th>Phone</th>
-                <th>Vip</th>
-                <th>NonGrata</th>
-                <th>Comment</th>
-                <th>Update</th>
+                <th><fmt:message key="registration.edit.id"/></th>
+                <th><fmt:message key="registration.edit.roleId"/></th>
+                <th><fmt:message key="registration.name"/></th>
+                <th><fmt:message key="registration.surname"/></th>
+                <th><fmt:message key="registration.email"/></th>
+                <th><fmt:message key="registration.phone"/></th>
+                <th><fmt:message key="registration.edit.vip"/></th>
+                <th><fmt:message key="registration.edit.nongrata"/></th>
+                <th><fmt:message key="registration.edit.comment"/></th>
+                <th><fmt:message key="button.commands.update"/></th>
 
             </tr>
             </thead>
@@ -251,31 +289,33 @@
 
                     <td>
                         <button type="button" class="btn btn-outline-info  btn-sm badge-pill UPDATE_BTN"
-                                data-toggle="modal" data-target="#UPDATE_Element">UPDATE ${r.guestId} </button>
+                                data-toggle="modal" data-target="#UPDATE_Element"><fmt:message
+                                key="button.commands.update"/>
+                                ${r.guestId} </button>
                     </td>
 
                 </tr>
             </c:forEach>
 
-            <nav aria-label="Page navigation example">
-                <ul class="pagination">
-                    <li class="page-item">
-                        <a class="page-link" href="#" aria-label="Previous">
-                            <span aria-hidden="true">&laquo;</span>
-                            <span class="sr-only">Previous</span>
-                        </a>
-                    </li>
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item">
-                        <a class="page-link" href="#" aria-label="Next">
-                            <span aria-hidden="true">&raquo;</span>
-                            <span class="sr-only">Next</span>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
+            <%--            <nav aria-label="Page navigation example">--%>
+            <%--                <ul class="pagination">--%>
+            <%--                    <li class="page-item">--%>
+            <%--                        <a class="page-link" href="#" aria-label="Previous">--%>
+            <%--                            <span aria-hidden="true">&laquo;</span>--%>
+            <%--                            <span class="sr-only">Previous</span>--%>
+            <%--                        </a>--%>
+            <%--                    </li>--%>
+            <%--                    <li class="page-item"><a class="page-link" href="#">1</a></li>--%>
+            <%--                    <li class="page-item"><a class="page-link" href="#">2</a></li>--%>
+            <%--                    <li class="page-item"><a class="page-link" href="#">3</a></li>--%>
+            <%--                    <li class="page-item">--%>
+            <%--                        <a class="page-link" href="#" aria-label="Next">--%>
+            <%--                            <span aria-hidden="true">&raquo;</span>--%>
+            <%--                            <span class="sr-only">Next</span>--%>
+            <%--                        </a>--%>
+            <%--                    </li>--%>
+            <%--                </ul>--%>
+            <%--            </nav>--%>
 
             </tbody>
         </table>

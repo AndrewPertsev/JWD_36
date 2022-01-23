@@ -37,7 +37,9 @@ public final class ServiceFactory {
         return guestService;
     }
 
-    public OfferServiceable getOfferService() { return offerService; }
+    public OfferServiceable getOfferService() {
+        return offerService;
+    }
 
 
 }

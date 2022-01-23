@@ -17,59 +17,7 @@
 </head>
 <body>
 <jsp:include page="/WEB-INF/view/common/header_common.jsp"/>
-<br>
 
-<%--------------------UPDATE POP UP------------------------%>
-
-<div class="modal fade" id="UPDATE_Element" tabindex="-1" role="dialog" aria-labelledby="1"
-     aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-body">
-                <div class="container">
-                    <form action="Controller" method="post">
-                        <input type="hidden" name="command" value="UPDATE_TIMESHEET">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="1">Update request data</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-
-                        <div class="form-group-sm">
-                            <label>Number</label>
-                            <input type="text" class="form-control" required autofocus
-                                   id="timesheetId"
-                                   name="timesheetId">
-                        </div>
-
-                        <div class="form-group-sm">
-                            <label for="apartmentId">Category</label>
-                            <input type="text" class="form-control" required autofocus
-                                   id="apartmentId"
-                                   name="apartmentId">
-                        </div>
-
-                        <div class="form-group-sm">
-                            <label for="reservedDate">Quantity</label>
-                            <input type="text" class="form-control" required autofocus
-                                   id="reservedDate"
-                                   name="reservedDate">
-                        </div>
-
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-outline-secondary  badge-pill" data-dismiss="modal">
-                                Close
-                            </button>
-                            <button type="submit" class="btn btn-outline-info  badge-pill" name="UpdateData">UPDATE
-                            </button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 
 <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap4.min.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/dataTables.jqueryui.min.css">
@@ -86,9 +34,6 @@
 <script src="https://cdn.datatables.net/1.11.3/js/dataTables.jqueryui.min.js"></script>
 <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
 
-
-<%--------------------SCRIPTS------------------------%>
-
 <%--PAGINATION Script--%>
 <script>$(document).ready(function () {
     $('#TABLE').DataTable({
@@ -102,89 +47,20 @@
     });
 });</script>
 
-<%--UPDATE Script--%>
-<script>
-    $(document).ready(function () {
-        $('.UPDATE_BTN').on('click', function () {
-            $('#UPDATE_Element').modal('show');
-            $tr = $(this).closest('tr');
-            var data = $tr.children("td").map(function () {
-                return $(this).text();
-            }).get();
-            console.log(data);
-            $('#timesheetId').val(data[0]);
-            $('#apartmentId').val(data[1]);
-            $('#reservedDate').val(data[2]);
-        });
-    });
-</script>
-
-<%--DELETE Script--%>
-<script>
-    $(document).ready(function () {
-        $('.DELETE_BTN').on('click', function () {
-            $('#DELETE_Element').modal('show');
-            $tr = $(this).closest('tr');
-            var data = $tr.children("td").map(function () {
-                return $(this).text();
-            }).get();
-            console.log(data);
-            $('#requestIdDelete').val(data[0]);
-        });
-    });
-</script>
-
-
-<%--------------------DELETE POP UP------------------------%>
-
-<div class="modal fade" id="DELETE_Element" tabindex="-1" role="dialog" aria-labelledby="2"
-     aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-body">
-                <form action="Controller" method="delete">
-                    <input type="hidden" name="command" value="DELETE_TIMESHEET">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="2">Are you sure to delete request?</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-
-                    <div class="form-group-sm">
-                        <label> Number </label>
-                        <input type="text" class="form-control" required autofocus
-                               id="timesheetIdDelete"
-                               name="timesheetId">
-                    </div>
-
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-outline-secondary  badge-pill" data-dismiss="modal">NO,
-                            CLOSE
-                        </button>
-                        <button type="submit" class="btn btn-outline-danger  badge-pill" name="DeleteData">YES, DELETE
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
 <%--------------------------TABLE-----------------------------%>
 
 <div class="container">
     <h2><fmt:message key="header.common.timesheet"/></h2>
-    <p>This table shows timesheet</p>
+    <p><fmt:message key="timesheet.header_second"/></p>
     <div class="scrollable" class="table-responsive-sm" style="overflow-y: scroll;">
         <table class="table-condensed table table-hover table-bordered table-striped fixtable" id="TABLE"
                class="display"
                style="width:100%">
             <thead>
             <tr align="center">
-                <th> id</th>
-                <th>Apartment</th>
-                <th>Reserved Date</th>
+                <th><fmt:message key="registration.edit.id"/></th>
+                <th><fmt:message key="timesheet.apartment_id"/> </th>
+                <th><fmt:message key="timesheet.reserved_date"/> </th>
                 <th><a href="Controller?command=SORT_TIMESHEET_BY_APARTMENT_ID"
                 >Sort</a>
                     Select
@@ -197,7 +73,6 @@
                     <td><c:out value="${z.timesheetId}"/></td>
                     <td><c:out value="${z.apartmentId}"/></td>
                     <td><c:out value="${z.reservedDate}"/></td>
-
                     <td>
                         <a href="Controller?command=OFFE&requestId=${z.timesheetId}"
                         >$$$$$ for ${z.timesheetId}</a>

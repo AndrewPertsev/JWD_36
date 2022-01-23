@@ -30,6 +30,7 @@ public class OfferDaoImpl implements OfferDao {
     private static final String INSERT_OFFER_SENT_STATUS = "UPDATE hotelappdb.offer SET is_sent= ? WHERE (offer_id = ?)";
     private static final String INSERT_OFFER_PAID_STATUS = "UPDATE hotelappdb.offer SET is_paid= ? WHERE (offer_id = ?)";
     private static final String INSERT_OFFER_CLOSED_STATUS = "UPDATE hotelappdb.offer SET is_closed= ? WHERE (offer_id = ?)";
+    private static final String UPDATE_OFFER_STATUS_AND_PRICE = "UPDATE hotelappdb.offer SET is_sent=?, is_paid=?, is_closed=?, price_offer=? WHERE (offer_id = ?)";
 
 
     public OfferDaoImpl() {
@@ -331,9 +332,36 @@ public class OfferDaoImpl implements OfferDao {
 
 
     @Override
-    public boolean update(Offer entity) throws DAOException {
+    public boolean update(Offer offer) throws DAOException {
         boolean done = true;
-        return false;
+        Connection connection = null;
+        PreparedStatement statement = null;
+
+        try {
+            connection = connectionPool.getConnection();
+            statement = connection.prepareStatement(UPDATE_OFFER_STATUS_AND_PRICE);
+
+            statement.setBoolean(1, offer.isSent());
+            statement.setBoolean(2, offer.isPaid());
+            statement.setBoolean(3, offer.isClosed());
+            statement.setInt(4,Integer.parseInt(String.valueOf(offer.getPriceOffer())));
+            statement.setInt(5, offer.getOfferId());
+
+            statement.executeUpdate();
+
+        } catch (SQLException | PoolException e) {
+            done = false;
+            logger.error("Element does not found ", e);
+            throw new DAOException(e);
+        } finally {
+            try {
+                connectionPool.closeConnection(connection, statement);
+            } catch (PoolException e) {
+                logger.error("Can't close connection ", e);
+                throw new DAOException(e);
+            }
+            return done;
+        }
     }
 
     @Override

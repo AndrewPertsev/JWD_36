@@ -13,8 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-import static by.epam.heritage.ap.controller.ConstantsCommandPath.GO_TO_LOGIN_PAGE;
-import static by.epam.heritage.ap.controller.ConstantsCommandPath.GO_TO_MAIN_PAGE;
+import static by.epam.heritage.ap.controller.ConstantsCommandPath.*;
 import static by.epam.heritage.ap.controller.ConstantsParametersAndAttributes.*;
 
 public class LoginCommand implements Commandable {
@@ -66,13 +65,13 @@ public class LoginCommand implements Commandable {
             session.setAttribute(SESSION_ATTRIBUTE_GUEST_VIP, authorizedGuestVIP);
 
 
-            response.sendRedirect(request.getServletPath() + "?" + PARAMETER_COMMAND + "=" + GO_TO_MAIN_PAGE + "&" + ATTRIBUTE_MESSAGE_SUCCESS + "=" + MESSAGE_SUCCESS);
+            response.sendRedirect(PATH_REDIRECT_CONTROLLER_COMMAND + GO_TO_MAIN_PAGE + PATH_MESSAGE_SUCCESS);
         } else {
-            response.sendRedirect(request.getServletPath() + "?" + PARAMETER_COMMAND + "=" + GO_TO_LOGIN_PAGE + "&" + ATTRIBUTE_MESSAGE_FAIL + "=" + MESSAGE_WRONG_DATA);
+            response.sendRedirect(PATH_REDIRECT_CONTROLLER_COMMAND + GO_TO_LOGIN_PAGE + PATH_MESSAGE_FAIL);
         }
+
     }
 }
-
 
 
 

@@ -21,7 +21,9 @@ public final class ConstantsCommandPath {
     public static final String UPDATE_APARTMENT = "UPDATE_APARTMENT";
     public static final String UPDATE_GUEST = "UPDATE_GUEST";
     public static final String UPDATE_REQUEST = "UPDATE_REQUEST";
-    public static final String UPDATE_OFFER = "UPDATE_OFFER";
+    public static final String UPDATE_OFFER_STATUS = "UPDATE_OFFER_STATUS";
+    public static final String CLOSE_GUEST_SESSION = "CLOSE_GUEST_SESSION";
+    public static final String FIND_REQUESTS_UNRESPONDED_STATUS_ONLY = "FIND_REQUESTS_UNRESPONDED_STATUS_ONLY";
 
     public static final String GO_TO_APARTMENT_MANAGEMENT_PAGE = "GO_TO_APARTMENT_MANAGEMENT_PAGE";
     public static final String GO_TO_GUEST_MANAGEMENT_PAGE = "GO_TO_GUEST_MANAGEMENT_PAGE";
@@ -36,6 +38,9 @@ public final class ConstantsCommandPath {
     public static final String GO_TO_REQUEST_MANAGEMENT_PAGE = "GO_TO_REQUEST_MANAGEMENT_PAGE";
     public static final String GO_TO_TIMESHEET_MANAGEMENT_PAGE = "GO_TO_TIMESHEET_MANAGEMENT_PAGE";
 
+    public static final String PATH_REDIRECT_CONTROLLER_COMMAND = "/Controller?command=";
+    public static final String PATH_MESSAGE_FAIL = "&message_fail=true";
+    public static final String PATH_MESSAGE_SUCCESS = "&message_success=true";
 
     public static final String PATH_GO_TO_APARTMENT_MANAGEMENT_PAGE ="WEB-INF/view/apartment_management.jsp";
     public static final String PATH_GO_TO_GUEST_MANAGEMENT_PAGE = "WEB-INF/view/guest_management.jsp";
@@ -50,16 +55,7 @@ public final class ConstantsCommandPath {
     public static final String PATH_GO_TO_REQUEST_PAGE = "/WEB-INF/view/request.jsp";
     public static final String PATH_GO_TO_TIMESHEET_MANAGEMENT_PAGE = "/WEB-INF/view/timesheet_management.jsp";
 
-
-    public static final String PATH_TO_ERROR_400_PAGE = "/WEB-INF/view/error400.jsp";
-    public static final String PATH_TO_ERROR_403_PAGE = "/WEB-INF/view/error403.jsp";
-    public static final String PATH_TO_ERROR_404_PAGE = "/WEB-INF/view/error404.jsp";
-    public static final String PATH_TO_ERROR_500_PAGE = "/WEB-INF/view/error500.jsp";
     public static final String PATH_TO_ERROR_PAGE = "/WEB-INF/view/error.jsp";
-
-  //  ***************************************************************************************
-
-
     public static final String PATH_TO_ERROR_PAGE_REDIRECT = "/controller?command=error";
 
 

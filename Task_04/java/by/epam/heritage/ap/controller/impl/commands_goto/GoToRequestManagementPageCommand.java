@@ -27,17 +27,26 @@ public class GoToRequestManagementPageCommand implements Commandable {
         List<Request> requests = new ArrayList<>(0);
 
         RequestServiceable requestService = ServiceFactory.getInstance().getRequestService();
+        if (request.getParameter(ATTRIBUTE_FIND_UNRESPONDED_REQUESTS) != null) {
+            try {
+                requests = requestService.findUnresponded();
+            } catch (ServiceException e) {
+                logger.error("Can't execute request to database", e);
+                request.setAttribute(ATTRIBUTE_MESSAGE_FAIL, MESSAGE_DATABASE_ERROR);
+                response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            }
+        } else {
+            try {
+                requests = requestService.findAll();
+            } catch (ServiceException e) {
+                logger.error("Can't execute request to database", e);
+                request.setAttribute(ATTRIBUTE_MESSAGE_FAIL, MESSAGE_DATABASE_ERROR);
+                response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            }
 
-        try {
-            requests = requestService.findAll();
-        } catch (ServiceException e) {
-            logger.error("Can't execute request to database", e);
-            request.setAttribute(ATTRIBUTE_MESSAGE_FAIL, MESSAGE_DATABASE_ERROR);
-            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+
         }
-
         request.setAttribute(ATTRIBUTE_REQUESTS, requests);
-
         RequestDispatcher dispatcher = request.getRequestDispatcher(PATH_GO_TO_REQUEST_MANAGEMENT_PAGE);
         dispatcher.forward(request, response);
 

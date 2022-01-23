@@ -2,19 +2,25 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<fmt:setBundle basename="local"/>
+<fmt:setLocale value="${sessionScope.locale}"/>
+<fmt:setBundle basename="locale"/>
 
 <html>
 <head>
     <title><fmt:message key="header.common.apartments"/></title>
-
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="css/style.css" rel="stylesheet">
-
 </head>
 <body>
 <jsp:include page="/WEB-INF/view/common/header_common.jsp"/>
+
+<%String messageFail = request.getParameter("message_fail");
+    if (messageFail != null) {%>
+<h4 style="color:#de1212"><fmt:message key="message.fail"/><%}%></h4>
+<%String messageSuccess = request.getParameter("message_success");
+    if (messageSuccess != null) {%>
+<h4 style=color:#1bb7b1"><fmt:message key="message.success"/><%}%></h4>
 
 <%--------------------UPDATE POP UP------------------------%>
 
@@ -27,14 +33,14 @@
                     <form action="Controller" method="post">
                         <input type="hidden" name="command" value="UPDATE_APARTMENT">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="1">Update apartment data</h5>
+                            <h5 class="modal-title" id="1"><fmt:message key="apartment.Update_apartment_data"/></h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
 
                         <div class="form-group-sm">
-                            <label>Number</label>
+                            <label><fmt:message key="registration.edit.id"/></label>
                             <input type="text" class="form-control" required autofocus
                                    id="apartmentId"
                                    name="apartmentId"
@@ -43,7 +49,7 @@
                         </div>
 
                         <div class="form-group-sm">
-                            <label for="category">Category</label>
+                            <label for="category"><fmt:message key="apartment.Category"/></label>
                             <input type="text" class="form-control" required autofocus
                                    id="category"
                                    name="category"
@@ -52,7 +58,7 @@
                         </div>
 
                         <div class="form-group-sm">
-                            <label for="capacity">Capacity</label>
+                            <label for="capacity"><fmt:message key="apartment.Capacity"/></label>
                             <input type="text" class="form-control" required autofocus
                                    id="capacity"
                                    name="capacity"
@@ -61,7 +67,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="pathToPicture">Picture</label>
+                            <label for="pathToPicture"><fmt:message key="apartment.Picture"/></label>
                             <input type="text" class="form-control" required autofocus
                                    id="pathToPicture"
                                    name="pathToPicture"
@@ -70,7 +76,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="description">Description</label>
+                            <label for="description"><fmt:message key="apartment.Description"/></label>
                             <textarea class="form-control" id="description" name="description" required autofocus
                             <%--                                   placeholder="Enter description">--%>
                             ></textarea>
@@ -82,9 +88,12 @@
                         <%--                   style="width:80px;"--%>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-outline-secondary  badge-pill" data-dismiss="modal">
-                                Close
+                                <fmt:message key="button.commands.close"/>
+
                             </button>
-                            <button type="submit" class="btn btn-outline-info  badge-pill" name="UpdateData">UPDATE
+                            <button type="submit" class="btn btn-outline-info  badge-pill" name="UpdateData">
+                                <fmt:message key="button.commands.update"/>
+
                             </button>
                         </div>
                     </form>
@@ -189,14 +198,14 @@
                 <form action="Controller" method="delete">
                     <input type="hidden" name="command" value="DELETE_APARTMENT">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="2">Are you sure to delete apartment?</h5>
+                        <h5 class="modal-title" id="2">#<fmt:message key="button.commands.Are_you_sure_to_delete"/></h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
 
                     <div class="form-group-sm">
-                        <label>Number</label>
+                        <label><fmt:message key="registration.edit.id"/></label>
                         <input type="text" class="form-control" required autofocus
                                id="apartmentIdDelete"
                                name="apartmentId">
@@ -204,9 +213,11 @@
 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-outline-secondary  badge-pill" data-dismiss="modal">
-                            NO, close
+                            <fmt:message key="button.commands.close"/>
+
                         </button>
-                        <button type="submit" class="btn btn-outline-danger  badge-pill" name="DELETEDATA">YES, DELETE
+                        <button type="submit" class="btn btn-outline-danger  badge-pill" name="DELETEDATA"><fmt:message
+                                key="button.commands.delete"/>
                         </button>
                     </div>
                 </form>
@@ -225,52 +236,56 @@
                     <form action="Controller" method="post">
                         <input type="hidden" name="command" value="ADD_APARTMENT">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="3">Add new apartment </h5>
+                            <h5 class="modal-title" id="3"><fmt:message key="button.commands.add_new_apartment"/></h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
 
                         <div class="form-group-sm">
-                            <label>Apartment</label>
+                            <label><fmt:message key="registration.edit.id"/></label>
                             <input type="text" class="form-control" required autofocus
                                    id="apartmentIdAdd"
                                    name="apartmentId">
                         </div>
 
                         <div class="form-group-sm">
-                            <label>Category</label>
+                            <label><fmt:message key="apartment.Category"/>
+                            </label>
                             <input type="text" class="form-control" required autofocus
                                    id="categoryAdd"
                                    name="category">
                         </div>
 
                         <div class="form-group-sm">
-                            <label>Capacity</label>
+                            <label><fmt:message key="apartment.Capacity"/>
+                            </label>
                             <input type="text" class="form-control" required autofocus
                                    id="capacityAdd"
                                    name="capacity">
                         </div>
 
                         <div class="form-group">
-                            <label>Picture</label>
+                            <label><fmt:message key="apartment.Picture"/>
+                            </label>
                             <input type="text" class="form-control" required autofocus
                                    id="pathToPictureAdd"
                                    name="pathToPicture">
                         </div>
 
                         <div class="form-group">
-                            <label>Description</label>
+                            <label><fmt:message key="apartment.Description"/>
+                            </label>
                             <textarea class="form-control" id="descriptionAdd" name="description" required
                                       autofocus></textarea>
                         </div>
 
                         <div class="modal-footer">
                             <button type="button" class="btn btn-outline-secondary  badge-pill" data-dismiss="modal">
-                                Close
+                                <fmt:message key="button.commands.close"/>
                             </button>
-                            <button type="submit" class="btn btn-outline-info  badge-pill" name="ADDDATA">ADD NEW
-                                APARTMENT
+                            <button type="submit" class="btn btn-outline-info  badge-pill" name="ADDDATA"><fmt:message
+                                    key="button.commands.add_new_apartment"/>
                             </button>
                         </div>
                     </form>
@@ -284,9 +299,9 @@
 
 <div class="container">
     <h2><fmt:message key="header.common.apartments"/></h2>
-    <p>This table shows list of all apartments in our hotel
+    <p><fmt:message key="apartment.header_second"/>
         <button type="button" class="btn btn-outline-success  btn-sm badge-pill ADD_BTN"
-                data-toggle="modal" data-target="#ADD_Element">Add new apartment
+                data-toggle="modal" data-target="#ADD_Element"><fmt:message key="button.commands.add_new_apartment"/>
         </button>
     </p>
     <div class="table-responsive-sm" class="scrollable" style="overflow-y: scroll;">
@@ -294,13 +309,13 @@
                style="width:100%">
             <thead>
             <tr align="center">
-                <th>Id</th>
-                <th>Category</th>
-                <th>Capacity</th>
-                <th>Description</th>
-                <th>Picture</th>
-                <th>Update</th>
-                <th>Delete</th>
+                <th><fmt:message key="registration.edit.id"/></th>
+                <th><fmt:message key="apartment.Category"/></th>
+                <th><fmt:message key="apartment.Capacity"/></th>
+                <th><fmt:message key="apartment.Description"/></th>
+                <th><fmt:message key="apartment.Picture"/></th>
+                <th><fmt:message key="button.commands.update"/></th>
+                <th><fmt:message key="button.commands.delete"/>e</th>
             </tr>
             </thead>
             <tbody>
@@ -313,34 +328,37 @@
                     <td><c:out value="${r.pathToPicture}"/></td>
                     <td>
                         <button type="button" class="btn btn-outline-info  btn-sm badge-pill UPDATE_BTN"
-                                data-toggle="modal" data-target="#UPDATE_Element">UPDATE ${r.apartmentId} </button>
+                                data-toggle="modal" data-target="#UPDATE_Element"><fmt:message
+                                key="button.commands.update"/>
+                                ${r.apartmentId} </button>
                     </td>
                     <td>
                         <button type="button" class="btn btn-outline-danger  btn-sm badge-pill DELETE_BTN"
-                                data-toggle="modal" data-target="#DELETE_Element">HIDE ${r.apartmentId} </button>
+                                data-toggle="modal" data-target="#DELETE_Element"><fmt:message
+                                key="button.commands.delete"/> ${r.apartmentId} </button>
                     </td>
                 </tr>
             </c:forEach>
 
-            <nav aria-label="Page navigation example">
-                <ul class="pagination">
-                    <li class="page-item">
-                        <a class="page-link" href="#" aria-label="Previous">
-                            <span aria-hidden="true">&laquo;</span>
-                            <span class="sr-only">Previous</span>
-                        </a>
-                    </li>
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item">
-                        <a class="page-link" href="#" aria-label="Next">
-                            <span aria-hidden="true">&raquo;</span>
-                            <span class="sr-only">Next</span>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
+            <%--            <nav aria-label="Page navigation example">--%>
+            <%--                <ul class="pagination">--%>
+            <%--                    <li class="page-item">--%>
+            <%--                        <a class="page-link" href="#" aria-label="Previous">--%>
+            <%--                            <span aria-hidden="true">&laquo;</span>--%>
+            <%--                            <span class="sr-only">Previous</span>--%>
+            <%--                        </a>--%>
+            <%--                    </li>--%>
+            <%--                    <li class="page-item"><a class="page-link" href="#">1</a></li>--%>
+            <%--                    <li class="page-item"><a class="page-link" href="#">2</a></li>--%>
+            <%--                    <li class="page-item"><a class="page-link" href="#">3</a></li>--%>
+            <%--                    <li class="page-item">--%>
+            <%--                        <a class="page-link" href="#" aria-label="Next">--%>
+            <%--                            <span aria-hidden="true">&raquo;</span>--%>
+            <%--                            <span class="sr-only">Next</span>--%>
+            <%--                        </a>--%>
+            <%--                    </li>--%>
+            <%--                </ul>--%>
+            <%--            </nav>--%>
 
             </tbody>
         </table>

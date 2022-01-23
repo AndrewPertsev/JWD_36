@@ -8,15 +8,23 @@
       integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 <link href="css/style.css" rel="stylesheet">
 
-<fmt:setBundle basename="local"/>
+
+<fmt:setLocale value="${sessionScope.locale}"/>
+<fmt:setBundle basename="locale"/>
 
 <html>
 <head>
-    <title>REQUESTS</title>
+    <title><fmt:message key="header.common.requests"/></title>
 </head>
 <body>
 <jsp:include page="/WEB-INF/view/common/header_common.jsp"/>
-<br>
+
+<%String messageFail = request.getParameter("message_fail");
+    if (messageFail != null) {%>
+<h4 style="color:#de1212"><fmt:message key="message.fail"/><%}%></h4>
+<%String messageSuccess = request.getParameter("message_success");
+    if (messageSuccess != null) {%>
+<h4 style="color:#1bb7b1"><fmt:message key="message.success"/><%}%></h4>
 
 <%--------------------UPDATE POP UP------------------------%>
 
@@ -29,67 +37,76 @@
                     <form action="Controller" method="post">
                         <input type="hidden" name="command" value="UPDATE_REQUEST">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="1">Update request data</h5>
+                            <h5 class="modal-title" id="1"><fmt:message key="request.management.Update_request_data"/>
+                            </h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
 
                         <div class="form-group-sm">
-                            <label>Number</label>
+                            <label><fmt:message key="registration.edit.id"/>
+                            </label>
                             <input type="text" class="form-control" required autofocus
                                    id="requestId"
                                    name="requestId">
                         </div>
 
                         <div class="form-group-sm">
-                            <label for="category">Category</label>
+                            <label for="category"><fmt:message key="request.category_apartment.Apartment_category"/>
+                            </label>
                             <input type="text" class="form-control" required autofocus
                                    id="category"
                                    name="category">
                         </div>
 
                         <div class="form-group-sm">
-                            <label for="quantity">Quantity</label>
+                            <label for="quantity"><fmt:message key="request.management.Quantity"/>
+                            </label>
                             <input type="text" class="form-control" required autofocus
                                    id="quantity"
                                    name="quantity">
                         </div>
 
                         <div class="form-group">
-                            <label for="start">Check in</label>
+                            <label for="start"><fmt:message key="request.Check-in"/></label>
                             <input type="text" class="form-control" required autofocus
                                    id="start"
                                    name="start">
                         </div>
 
                         <div class="form-group">
-                            <label for="end">Check out</label>
+                            <label for="end"><fmt:message key="request.Check-out"/></label>
                             <input type="text" class="form-control" required autofocus
                                    id="end"
                                    name="end">
                         </div>
 
+                        <%--                        <div class="form-group">--%>
+                        <%--                            <label for="menu">Menu</label>--%>
+                        <%--                        <input type="text" class="form-control" required autofocus--%>
+                        <%--                               id="menu" name="menu"> </div>--%>
                         <div class="form-group">
-                            <label for="menu">Menu</label>
-                            <select class="form-control setMargin" id="menu" name="menu" class="col-sm-4" ype="text"
-                                    required autofocus>
-                                <option value="1">Breakfast only</option>
-                                <option value="2">Half-board</option>
-                                <option value="3">All Inclusive</option>
-                                <option value="4">Ultra All Inclusive</option>
+                            <label for="menu"><fmt:message key="request.Menu"/></label>
+                            <select class="form-control setMargin" id="menu" name="menu" class="col-sm-4" type="text" required autofocus>
+                                <option value="1"><fmt:message key="request.Menu.Breakfast_only"/></option>
+                                <option value="2"><fmt:message key="request.Menu.Half-board"/></option>
+                                <option value="3"><fmt:message key="request.Menu.All_Inclusive"/></option>
+                                <option value="4"><fmt:message key="request.Menu.Ultra_All_Inclusive"/></option>
                             </select>
                         </div>
 
+
                         <div class="form-group">
-                            <label for="transfer">Transfer</label>
+                            <label for="transfer"><fmt:message key="request.Transfer"/>
+                            </label>
                             <select class="form-control setMargin" name="transfer" id="transfer" class="col-sm-4"
                                     required autofocus
                                     type="text">
-                                <option value="1">Transfer by shuttle</option>
-                                <option value="2">Transfer by taxi</option>
-                                <option value="3">Transfer by vip-car</option>
-                                <option value="4">Transfer by helicopter</option>
+                                <option value="1"><fmt:message key="request.Transfer.Shuttle"/></option>
+                                <option value="2"><fmt:message key="request.Transfer.Taxi"/></option>
+                                <option value="3"><fmt:message key="request.Transfer.Vip_car"/></option>
+                                <option value="4"><fmt:message key="request.Transfer.Helicopter"/></option>
                             </select>
                         </div>
 
@@ -103,11 +120,13 @@
 
                         <div class="modal-footer">
                             <button type="button" class="btn btn-outline-secondary  badge-pill" data-dismiss="modal">
-                                Close
+                                <fmt:message key="button.commands.close"/>
                             </button>
-                            <button type="submit" class="btn btn-outline-info  badge-pill" name="UpdateData">UPDATE
+                            <button type="submit" class="btn btn-outline-info  badge-pill" name="UpdateData">
+                                <fmt:message key="button.commands.update"/>
                             </button>
                         </div>
+
                     </form>
                 </div>
             </div>
@@ -194,24 +213,27 @@
                 <form action="Controller" method="delete">
                     <input type="hidden" name="command" value="DELETE_REQUEST">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="2">Are you sure to delete request?</h5>
+                        <h5 class="modal-title" id="2"><fmt:message key="button.commands.Are_you_sure_to_delete"/>
+                        </h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
 
                     <div class="form-group-sm">
-                        <label> Number </label>
+                        <label><fmt:message key="registration.edit.id"/>
+                        </label>
                         <input type="text" class="form-control" required autofocus
                                id="requestIdDelete"
                                name="requestId">
                     </div>
 
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-outline-secondary  badge-pill" data-dismiss="modal">NO,
-                            CLOSE
+                        <button type="button" class="btn btn-outline-secondary  badge-pill" data-dismiss="modal">
+                            <fmt:message key="button.commands.close"/>
                         </button>
-                        <button type="submit" class="btn btn-outline-danger  badge-pill" name="DeleteData">YES, DELETE
+                        <button type="submit" class="btn btn-outline-danger  badge-pill" name="DeleteData"><fmt:message
+                                key="button.commands.delete"/>
                         </button>
                     </div>
                 </form>
@@ -224,35 +246,37 @@
 
 <div class="container">
     <h2><fmt:message key="header.common.requests"/></h2>
-    <p>This table shows list of requests</p>
+    <p><fmt:message key="request.management.header_second"/></p>
     <div class="scrollable" class="table-responsive-sm" style="overflow-y: scroll;">
         <table class="table-condensed table table-hover table-bordered table-striped fixtable" id="TABLE"
                class="display"
                style="width:100%">
             <thead>
             <tr align="center">
-                <th> id</th>
-                <th>cat.</th>
-                <th>Persons</th>
-                <th>Check_in</th>
-                <th>Check_out</th>
-                <th>Menu</th>
-                <th>Transfer</th>
-                <th>User</th>
-                <th>Request_date</th>
-                <th><a href="Controller?command=SORT_REQUESTS_BY_RESPONDED_STATUS"
-                >Show unsent</a>
-                    <%--                    <a href="Controller?command=GO_TO_REQUEST_MANAGEMENT_PAGE"--%>
-                    <%--                       class="btn btn-outline-info  btn-sm badge-pill" >Show all requests</a>--%>
-                    Status
+                <th><fmt:message key="registration.edit.id"/></th>
+                <th><fmt:message key="request.category_apartment"/></th>
+                <th><fmt:message key="request.management.Quantity"/></th>
+                <th><fmt:message key="request.Check-in"/></th>
+                <th><fmt:message key="request.Check-out"/></th>
+                <th><fmt:message key="request.Menu"/></th>
+                <th><fmt:message key="request.Transfer"/></th>
+                <th><fmt:message key="request.management.Guest"/></th>
+                <th><fmt:message key="request.management.Request_date"/></th>
+                <th><fmt:message key="request.management.filter"/><a
+                        href="Controller?command=FIND_REQUESTS_UNRESPONDED_STATUS_ONLY"
+                        class="btn btn-outline-success  btn-sm badge-pill"><fmt:message
+                        key="request.management.Unsent"/>
+                </a>
+                    <a href="Controller?command=GO_TO_REQUEST_MANAGEMENT_PAGE"
+                       class="btn btn-outline-success  btn-sm badge-pill"><fmt:message key="request.management.all"/>
+                        </a>
                 </th>
-                <th>Guest</th>
-                <th>Assemble offer for request №</th>
+                <th><fmt:message key="button.commands.info"/></th>
+                <th><fmt:message key="button.commands.offer"/></th>
                 <%--<th>VIP</th>--%>
-
             </thead>
+
             <tbody>
-<%--            <c:forEach var="z" items="${requests}">--%>
             <c:forEach var="z" items="${ATTRIBUTE_REQUESTS}">
                 <tr align="center">
                     <td><c:out value="${z.requestId}"/></td>
@@ -260,49 +284,45 @@
                     <td><c:out value="${z.quantity}"/></td>
                     <td><c:out value="${z.start}"/></td>
                     <td><c:out value="${z.end}"/></td>
-                    <td><c:choose>
-                        <c:when test="${z.menu== 1}">Breakfast only</c:when>
-                        <c:when test="${z.menu==2}"> Half-board</c:when>
-                        <c:when test="${z.menu== 3}">All Inclusive</c:when>
-                        <c:when test="${z.menu== 4}">Ultra All Inclusive</c:when>
-                        <c:otherwise>"EMPTY"!</c:otherwise>
-                    </c:choose>
-                    </td>
-                        <%--                    <td><c:out value="${z.menuId}"/></td> --%>
-                        <%--                    <td><c:out value="${z.transferId== 1 ? 'Shuttle' :'Vip-Car'}"/></td>--%>
-                    <td><c:choose>
-                        <c:when test="${z.transfer== 1}">Shuttle</c:when>
-                        <c:when test="${z.transfer==2}">Taxi</c:when>
-                        <c:when test="${z.transfer== 3}">Vip car</c:when>
-                        <c:when test="${z.transfer== 4}">Helicopter</c:when>
-                        <c:otherwise>"EMPTY"!</c:otherwise>
-                    </c:choose>
-                    </td>
-
+                    <td><c:out value="${z.menu}"/></td>
+                    <td><c:out value="${z.transfer}"/></td>
+<%--                    <td><c:choose>--%>
+<%--                        <c:when test="${z.menu== 1}"><fmt:message key="request.Menu.Breakfast_only"/></c:when>--%>
+<%--                        <c:when test="${z.menu==2}"> <fmt:message key="request.Menu.Half-board"/></c:when>--%>
+<%--                        <c:when test="${z.menu== 3}"><fmt:message key="request.Menu.All_Inclusive"/> </c:when>--%>
+<%--                        <c:when test="${z.menu== 4}"><fmt:message key="request.Menu.Ultra_All_Inclusive"/></c:when>--%>
+<%--                    </c:choose>--%>
+<%--                    </td>--%>
+<%--                    <td><c:choose>--%>
+<%--                        <c:when test="${z.transfer== 1}"><fmt:message key="request.Transfer.Shuttle"/> </c:when>--%>
+<%--                        <c:when test="${z.transfer==2}"><fmt:message key="request.Transfer.Taxi"/> </c:when>--%>
+<%--                        <c:when test="${z.transfer== 3}"><fmt:message key="request.Transfer.Vip_car"/> </c:when>--%>
+<%--                        <c:when test="${z.transfer== 4}"><fmt:message key="request.Transfer.Helicopter"/></c:when>--%>
+<%--                    </c:choose></td>--%>
                     <td><c:out value="${z.guestId}"/></td>
                     <td><c:out value="${z.dateRequest}"/></td>
-                    <td><c:out value="${z.responded== true ? 'Response sent ' :'TO PROCESS'}"/></td>
+                    <td><c:out value="${z.responded== true ?( 'Response sent' ) :'TO PROCESS'}"/></td>
                         <%--                        <td><c:out value="${z.Vip}"/></td> badge badge-pill badge-info--%>
                     <td>
                         <a href="Controller?command=SHOW_GUEST_DATA&guestId=${z.guestId}"
-                        > Guest ${z.guestId} data </a>
-
-                                                    <button type="button" class="btn btn-outline-danger  btn-sm badge-pill DELETE_BTN"
-                                                            data-toggle="modal" data-target="#DELETE_Element">DELETE ${r.id} </button>
-
+                           class="btn btn-outline-info  btn-sm badge-pill"
+                        > <fmt:message key="button.commands.info"/>
+                        </a>
+                        <button type="button" class="btn btn-outline-danger  btn-sm badge-pill DELETE_BTN"
+                                data-toggle="modal" data-target="#DELETE_Element"><fmt:message
+                                key="button.commands.delete"/> ${r.id} </button>
                     </td>
 
                     <td>
                         <a href="Controller?command=OFFER&requestId=${z.requestId}"
-                            <%--                           class="btn btn-outline-info  btn-sm badge-pill"--%>
-                        >offer for ${z.requestId}</a>
-                            <%--                    <td>--%>
+                           class="btn btn-outline-success  btn-sm badge-pill"
+                        > <fmt:message key="button.commands.offer"/>
+                        </a>
                         <button type="button" class="btn btn-outline-info  btn-sm badge-pill UPDATE_BTN"
-                                data-toggle="modal" data-target="#UPDATE_Element">
-                            UPDATE ${r.requestId} </button>
-
+                                data-toggle="modal" data-target="#UPDATE_Element"><fmt:message
+                                key="button.commands.update"/>
+                        </button>
                     </td>
-
                 </tr>
             </c:forEach>
             </tbody>
@@ -310,6 +330,10 @@
     </div>
 </div>
 
+
+
+
+<p><h3 style="color:#90de12"><c:out value="${messageFail}"  /></h3></p>
 <jsp:include page="/WEB-INF/view/common/footer.jsp"/>
 </body>
 </html>

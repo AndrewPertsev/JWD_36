@@ -3,6 +3,8 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 
+<fmt:setLocale value="${sessionScope.locale}"/>
+<fmt:setBundle basename="locale"/>
 
 <%--TODO !!!!--%>
 
@@ -16,7 +18,8 @@
       integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css">
 
-<fmt:setBundle basename="local"/>
+<fmt:setLocale value="${sessionScope.locale}"/>
+<fmt:setBundle basename="locale"/>
 
 <head>
     <title>main after reg</title>
@@ -24,16 +27,14 @@
 <body>
 <jsp:include page="/WEB-INF/view/common/header_common.jsp"/>
 
-<br/>
-<%
-    String messageSuccess = (String) request.getParameter("message_success");
-    if (messageSuccess != null) {
-%>
-<h4><%
-        out.println("Authorization is  " + messageSuccess);
-    }
-%></h4>
-<br/>
+
+<%String messageFail = request.getParameter("message_fail");
+    if (messageFail != null) {%>
+<h4 style="color:#de1212"><fmt:message key="message.fail"/><%}%></h4>
+<%String messageSuccess = request.getParameter("message_success");
+    if (messageSuccess != null) {%>
+<h4 style="color:#1bb7b1"><fmt:message key="message.success"/><%}%></h4>
+
 
 <h4>Mr. <c:out value="${userName}"/> <c:out value="${userSurName}"/></h4>
 <p>you have id <c:out value="${userId}"/> and you are<c:choose>

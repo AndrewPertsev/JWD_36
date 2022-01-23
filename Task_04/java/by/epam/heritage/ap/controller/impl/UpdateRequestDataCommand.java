@@ -6,7 +6,9 @@ import by.epam.heritage.ap.service.RequestServiceable;
 import by.epam.heritage.ap.service.ServiceException;
 import by.epam.heritage.ap.service.ServiceFactory;
 import by.epam.heritage.ap.service.builder.BuilderFactory;
+import by.epam.heritage.ap.service.validator.RequestValidator;
 import by.epam.heritage.ap.service.validator.ValidatorException;
+import by.epam.heritage.ap.service.validator.ValidatorFactory;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -14,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+import static by.epam.heritage.ap.controller.ConstantsCommandPath.*;
 import static by.epam.heritage.ap.controller.ConstantsParametersAndAttributes.*;
 
 public class UpdateRequestDataCommand implements Commandable {
@@ -22,32 +25,54 @@ public class UpdateRequestDataCommand implements Commandable {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        boolean done = false;
         Request usersRequest = null;
         boolean isValidRequest = false;
 
+
         try {
-            usersRequest = BuilderFactory.getInstance().getRequestBuilder().update(request);
+            RequestValidator validator = ValidatorFactory.getInstance().getRequestValidator();
+            isValidRequest = validator.checkUpdatedEntityIsValid(request);
         } catch (ValidatorException e) {
-            logger.error("Can't validate incoming data", e);
-            request.setAttribute(ATTRIBUTE_MESSAGE_FAIL, MESSAGE_INVALID_DATA);
+            logger.error("Fail validation updated Request");
             response.sendError(HttpServletResponse.SC_BAD_REQUEST);
         }
 
 
-        RequestServiceable requestService = ServiceFactory.getInstance().getRequestService();
-        try {
-            isValidRequest = requestService.update(usersRequest);
-        } catch (ServiceException e) {
-            logger.error("Can't execute request to database", e);
-            request.setAttribute(ATTRIBUTE_MESSAGE_FAIL, MESSAGE_DATABASE_ERROR);
-            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-        }
         if (isValidRequest) {
 
-            response.sendRedirect("Controller?" + PARAMETER_COMMAND + "=GO_TO_REQUEST_MANAGEMENT_PAGE&start=" + MESSAGE_SUCCESS);
 
+            try {
+                usersRequest = BuilderFactory.getInstance().getRequestBuilder().update(request);
+            } catch (ValidatorException e) {
+                logger.error("Can't update users request data", e);
+                request.setAttribute(ATTRIBUTE_MESSAGE_FAIL, MESSAGE_INVALID_DATA);
+                response.sendError(HttpServletResponse.SC_BAD_REQUEST);
+            }
+
+
+            try {
+                RequestServiceable requestService = ServiceFactory.getInstance().getRequestService();
+                done = requestService.update(usersRequest);
+            } catch (ServiceException e) {
+                logger.error("Can't execute request to database", e);
+                request.setAttribute(ATTRIBUTE_MESSAGE_FAIL, MESSAGE_DATABASE_ERROR);
+                response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            }
+
+
+            if (done) {
+                response.sendRedirect(PATH_REDIRECT_CONTROLLER_COMMAND + GO_TO_REQUEST_MANAGEMENT_PAGE + PATH_MESSAGE_SUCCESS);
+            } else {
+                response.sendRedirect(PATH_REDIRECT_CONTROLLER_COMMAND + GO_TO_REQUEST_MANAGEMENT_PAGE + PATH_MESSAGE_FAIL);
+            }
+
+
+        } else {
+            response.sendRedirect(PATH_REDIRECT_CONTROLLER_COMMAND + GO_TO_REQUEST_MANAGEMENT_PAGE + PATH_MESSAGE_FAIL);
         }
-
     }
 }
+
+
 

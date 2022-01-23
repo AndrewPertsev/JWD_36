@@ -31,7 +31,7 @@ public class LocaleFilter implements Filter {
             newLocale = request.getParameter(PARAMETER_LOCALE_COMMON);
 
             if (session.getAttribute(PARAMETER_LOCALE_COMMON) == null) {
-                session.setAttribute(PARAMETER_LOCALE_COMMON, PARAMETER_LOCALE_DEFAULT_RU);
+                session.setAttribute(PARAMETER_LOCALE_COMMON, PARAMETER_LOCALE_DEFAULT_EN);
 
             } else if (newLocale != null && command != null) {
                 session.setAttribute(PARAMETER_LOCALE_COMMON, newLocale);

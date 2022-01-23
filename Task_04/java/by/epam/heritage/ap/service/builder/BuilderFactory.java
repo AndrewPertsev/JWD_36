@@ -10,6 +10,7 @@ public final class BuilderFactory {
 
     private RequestUserBuilder requestBuilder = new RequestUserBuilder();
     private ApartmentBuilder apartmentBuilder = new ApartmentBuilder();
+    private OfferStatusBuilder offerBuilder = new OfferStatusBuilder();
     private GuestBuilder guestBuilder = new GuestBuilder();
 
     private BuilderFactory() {
@@ -27,6 +28,8 @@ public final class BuilderFactory {
     public RequestUserBuilder getRequestBuilder() {
         return requestBuilder;
     }
+
+    public OfferStatusBuilder getOfferBuilder() { return offerBuilder; }
 
     public GuestBuilder getGuestBuilder() {
         return guestBuilder;

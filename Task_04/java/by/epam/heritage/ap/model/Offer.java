@@ -48,7 +48,13 @@ public class Offer extends Entity implements Serializable {
         this.quantity = quantity;
         this.priceOffer = priceOffer;
     }
-
+    public Offer(int offerId, boolean isSent, boolean isPaid, boolean isClosed,  BigDecimal priceOffer) {
+        this.offerId = offerId;
+        this.isSent = isSent;
+        this.isPaid = isPaid;
+        this.isClosed = isClosed;
+        this.priceOffer = priceOffer;
+    }
     public int getQuantity() {
         return quantity;
     }

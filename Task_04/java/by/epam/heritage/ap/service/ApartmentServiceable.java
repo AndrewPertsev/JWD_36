@@ -10,4 +10,5 @@ public interface ApartmentServiceable extends Serviceable <Apartment>{
     List<Apartment> findApartmentsSuitableForRequest(Request request) throws ServiceException;
 
 
+
 }

@@ -106,4 +106,17 @@ public class RequestServiceImpl implements RequestServiceable {
         }
         return idMax;
     }
+
+    @Override
+    public List<Request> findUnresponded() throws ServiceException {
+        List<Request> request;
+        RequestDao requestDao = DaoFactory.getInstance().getRequestDao();
+        try {
+            request = requestDao.findUnresponded();
+        } catch (DAOException e) {
+            logger.error("Service can't find element ", e);
+            throw new ServiceException(e);
+        }
+        return request;
+    }
 }

@@ -6,10 +6,10 @@ import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-import static by.epam.heritage.ap.controller.ConstantsParametersAndAttributes.*;
+import static by.epam.heritage.ap.controller.ConstantsCommandPath.*;
+import static by.epam.heritage.ap.controller.ConstantsParametersAndAttributes.PARAMETER_REQUEST_ID;
 
 public class OfferCommand implements Commandable {
     private static final Logger logger = LogManager.getLogger(OfferCommand.class);
@@ -22,9 +22,9 @@ public class OfferCommand implements Commandable {
         request.setAttribute(PARAMETER_REQUEST_ID, idRequest);
 
         if (idRequest != null || idRequest != "") {
-            response.sendRedirect("Controller?" + PARAMETER_COMMAND + "=GO_TO_OFFER_PROJECT_PAGE&" + PARAMETER_REQUEST_ID + "=" + idRequest);
+            response.sendRedirect(PATH_REDIRECT_CONTROLLER_COMMAND + GO_TO_OFFER_PROJECT_PAGE + "&" + PARAMETER_REQUEST_ID + "=" + idRequest);
         } else {
-            response.sendRedirect("Controller?" + PARAMETER_COMMAND + "=GO_TO_REQUEST_MANAGEMENT_PAGE&errorMessage=" + MESSAGE_WRONG_DATA);
+            response.sendRedirect(PATH_REDIRECT_CONTROLLER_COMMAND + GO_TO_REQUEST_MANAGEMENT_PAGE + PATH_MESSAGE_FAIL);
         }
 
     }

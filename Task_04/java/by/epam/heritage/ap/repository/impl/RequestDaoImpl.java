@@ -1,6 +1,7 @@
 package by.epam.heritage.ap.repository.impl;
 
 import by.epam.heritage.ap.controller.ConstantsParametersAndAttributes;
+import by.epam.heritage.ap.model.Apartment;
 import by.epam.heritage.ap.model.Request;
 import by.epam.heritage.ap.repository.DAOException;
 import by.epam.heritage.ap.repository.RequestDao;
@@ -22,13 +23,58 @@ public class RequestDaoImpl implements RequestDao {
     private static final String INSERT_NEW_REQUEST = "INSERT INTO hotelappdb.request (request.user_id, request.menu_id , request.transfer_id, request.quantity_persons, request.category_id, distance, date_in, date_out, date_request,  responded) VALUES (?,?,?, ?,?,? ,?,?,?, ?)";
     private static final String FIND_MAXIMUM_REQUEST_ID = "SELECT MAX(request_id) FROM hotelappdb.request ";
     private final static String FIND_ALL_REQUESTS = "SELECT request_id,user_id ,menu_id ,transfer_id ,category_id,quantity_persons,date_in ,date_out ,distance ,date_request , responded FROM request ";
+    private final static String FIND_UNRESPONDED_REQUESTS = "SELECT request_id,user_id ,menu_id ,transfer_id ,category_id,quantity_persons,date_in ,date_out ,distance ,date_request , responded FROM request WHERE responded=false";
     private final static String FIND_REQUEST_BY_ID = "SELECT request_id,user_id ,menu_id ,transfer_id ,category_id,quantity_persons,date_in ,date_out ,distance ,date_request , responded FROM request WHERE request_id = ?";
     private final static String UPDATE_REQUEST_BY_ID = "UPDATE hotelappdb.request SET user_id =? , menu_id = ?, transfer_id = ?, quantity_persons = ?, category_id = ? ,distance= ?  ,date_in = ?, date_out = ?, date_request= ? , responded= ? WHERE (request_id = ?)";
     private static final String UPDATE_REQUEST_IS_RESPONDED_STATUS = "UPDATE hotelappdb.request SET responded = ? WHERE (request_id = ?)";
 
     public RequestDaoImpl() {
     }
+    @Override
+    public List<Request> findUnresponded() throws DAOException {
+        List<Request> requests = new ArrayList<>(0);
+        PreparedStatement statement = null;
+        Connection connection = null;
+        ResultSet rs = null;
 
+        try {
+            connection = connectionPool.getConnection();
+            statement = connection.prepareStatement(FIND_UNRESPONDED_REQUESTS);
+            rs = statement.executeQuery();
+
+            while (rs.next()) {
+                Request request = new Request();
+
+                request.setRequestId(rs.getInt(1));
+                request.setGuestId(rs.getInt(2));
+                request.setMenu(rs.getInt(3));
+                request.setTransfer(rs.getInt(4));
+                request.setCategory(rs.getInt(5));
+                request.setQuantity(rs.getInt(6));
+                request.setStart(LocalDate.parse(rs.getString(7)));
+                request.setEnd(LocalDate.parse(rs.getString(8)));
+                request.setDistance(rs.getInt(9));
+                request.setDateRequest(LocalDate.parse(rs.getString(10)));
+                request.setResponded(rs.getBoolean(11));
+
+                requests.add(request);
+            }
+            return requests;
+
+        } catch (SQLException | PoolException e) {
+            logger.error("Element does not found ", e);
+            throw new DAOException(e);
+
+        } finally {
+            try {
+                connectionPool.closeConnection(connection, statement, rs);
+            } catch (PoolException e) {
+                logger.error("Can't close connection ", e);
+                throw new DAOException(e);
+            }
+
+        }
+    }
 
     @Override
     public boolean update(Request request) throws DAOException {

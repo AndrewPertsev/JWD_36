@@ -12,65 +12,71 @@
 <fmt:setLocale value="${sessionScope.locale}"/>
 <fmt:setBundle basename="locale"/>
 
-<nav class="navbar navbar-expand-xl navbar-dark bg-dark ">
-    <a href="##" class="navbar-brand" style="color:blueviolet">
-        HERITAGE APARTMENTS</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
-            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-        <div class="navbar-nav">
-            <a class="nav-item nav-link active" href="Controller?command=GO_TO_HOME_PAGE"><fmt:message
-                    key="header.common.home"/><span
-                    class="sr-only">(current)</span></a>
-            <a class="nav-item nav-link" href="Controller?command=GO_TO_REQUEST_PAGE"><fmt:message key="header.common.book_now"/>
-            </a>
-            <a class="nav-item nav-link" href="Controller?command=GO_TO_GALLERY_PAGE">todo<fmt:message key="header.common.gallery"/></a>
-            <a class="nav-item nav-link" href="Controller?command=GO_TO_GUEST_ROOM_PAGE"> MY PAGE</a>
-            <a class="nav-item nav-link" href="Controller?command=GO_TO_REQUEST_MANAGEMENT_PAGE"><fmt:message key="header.common.requests"/>
-            </a>
-            <a class="nav-item nav-link" href="Controller?command=GO_TO_APARTMENT_MANAGEMENT_PAGE"><fmt:message key="header.common.apartments"/>
-            </a>
-            <a class="nav-item nav-link" href="Controller?command=GO_TO_OFFER_MANAGEMENT_PAGE"><fmt:message key="header.common.offers"/>
-            </a>
-            <a class="nav-item nav-link" href="Controller?command=GO_TO_GUEST_MANAGEMENT_PAGE"><fmt:message key="header.common.guests"/>
-            </a>
-            <a class="nav-item nav-link" href="Controller?command=GO_TO_TIMESHEET_MANAGEMENT_PAGE"><fmt:message key="header.common.timesheet"/></a>
-            <%--            <a class="nav-item nav-link" href="#">PAYMENT</a>--%>
-            <a class="nav-item nav-link" href="#"></a>
-            <a class="nav-item nav-link" href="#"></a>
-            <a class="nav-item nav-link" href="#"></a>
-            <a class="nav-item nav-link "
-               href="${pageContext.request.contextPath}?command=${pageContext.request.getParameter("command")}&locale=en_EN"><fmt:message
-                    key="header.common.en.button"/></a>
-            <%--            <a class="nav-item nav-link" href="Controller?command=SWITCH_LANGUAGE&locale=en">"${en_button}"</a>--%>
-            <a class="nav-item nav-link"
-               href="${pageContext.request.contextPath}?command=${pageContext.request.getParameter("command")}&locale=ru_RU"><fmt:message
-                    key="header.common.ru.button"/></a>
-            <a class="nav-item nav-link" href="#"></a>
-            <a class="nav-item nav-link" href="#"></a>
+<c:choose>
+    <c:when test="${sessionScope.userRoleId==2}">
+        <header>
+            <nav class="navbar navbar-expand-xl navbar-dark bg-dark ">
+                <a href="##" class="navbar-brand" style="color:blueviolet">
+                    HERITAGE APARTMENTS</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+                        aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                    <div class="navbar-nav ml-auto">
+                        <a class="nav-item nav-link active" href="Controller?command=GO_TO_HOME_PAGE"><fmt:message key="header.common.home"/><span class="sr-only">(current)</span></a>
+                        <a class="nav-item nav-link" href="Controller?command=GO_TO_REQUEST_PAGE"><fmt:message key="header.common.book_now"/></a>
+                        <a class="nav-item nav-link" href="Controller?command=GO_TO_GALLERY_PAGE">todo<fmt:message key="header.common.gallery"/></a>
+                        <a class="nav-item nav-link" href="Controller?command=GO_TO_GUEST_ROOM_PAGE"> <fmt:message key="header.common.my_page"/></a>
+                        <a class="nav-item nav-link"href="Controller?command=GO_TO_REQUEST_MANAGEMENT_PAGE"><fmt:message key="header.common.requests"/></a>
+                        <a class="nav-item nav-link" href="Controller?command=GO_TO_APARTMENT_MANAGEMENT_PAGE"><fmt:message key="header.common.apartments"/></a>
+                        <a class="nav-item nav-link" href="Controller?command=GO_TO_OFFER_MANAGEMENT_PAGE"><fmt:message key="header.common.offers"/></a>
+                        <a class="nav-item nav-link" href="Controller?command=GO_TO_GUEST_MANAGEMENT_PAGE"><fmt:message key="header.common.guests"/></a>
+                        <a class="nav-item nav-link" href="Controller?command=GO_TO_TIMESHEET_MANAGEMENT_PAGE"><fmt:message key="header.common.timesheet"/></a>
+                            <%--            <a class="nav-item nav-link" href="#">PAYMENT</a>--%>
+                        <a class="nav-item nav-link" href="#"></a>
+                        <a class="nav-item nav-link " href="${pageContext.request.contextPath}?command=${pageContext.request.getParameter("command")}&locale=en_EN"><fmt:message key="header.common.en.button"/></a>
+                        <a class="nav-item nav-link" href="${pageContext.request.contextPath}?command=${pageContext.request.getParameter("command")}&locale=ru_RU"><fmt:message key="header.common.ru.button"/></a>
+                        <a class="nav-item nav-link" href="#"></a>
+                        <a class="nav-item nav-link" href="Controller?command=GO_TO_REGISTRATION_PAGE"><fmt:message key="header.common.sign_up"/></a>
+                        <a class="nav-item nav-link" class="text-right" href="Controller?command=GO_TO_LOGIN_PAGE"><fmt:message key="header.common.login"/></a>
+                        <a class="nav-item nav-link" class="text-right" href="Controller?command=CLOSE_GUEST_SESSION"><fmt:message key="header.common.exit"/></a>
+                    </div>
+                </div>
+            </nav>
+        </header>
+    </c:when>
 
-            <a class="nav-item nav-link" href="Controller?command=GO_TO_REGISTRATION_PAGE"><fmt:message key="header.common.sign_up"/></a>
-            <a class="nav-item nav-link" class="text-right" href="Controller?command=GO_TO_LOGIN_PAGE"><fmt:message key="header.common.login"/></a>
-        </div>
-    </div>
-</nav>
+    <c:otherwise>
+        <header>
+            <nav class="navbar navbar-expand-xl navbar-dark bg-dark  ml-auto">
+                <a href="##" class="navbar-brand" style="color:blueviolet">
+                    HERITAGE APARTMENTS</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+                        aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                   <div class="collapse navbar-collapse" id="navbarNavAltMarkup2" flex-row-reverse>
+                    <div class="navbar-nav ml-auto" >
+                        <a class="nav-item nav-link active" href="Controller?command=GO_TO_HOME_PAGE"><fmt:message key="header.common.home"/><span class="sr-only">(current)</span></a>
+                        <a class="nav-item nav-link" href="Controller?command=GO_TO_REQUEST_PAGE"><fmt:message key="header.common.book_now"/></a>
+                        <a class="nav-item nav-link" href="Controller?command=GO_TO_GALLERY_PAGE">todo<fmt:message key="header.common.gallery"/></a>
+                        <a class="nav-item nav-link" href="Controller?command=GO_TO_GUEST_ROOM_PAGE"> <fmt:message key="header.common.my_page"/></a>
+                        <a class="nav-item nav-link" href="#"></a>
+                        <a class="nav-item nav-link " href="${pageContext.request.contextPath}?command=${pageContext.request.getParameter("command")}&locale=en_EN"><fmt:message key="header.common.en.button"/></a>
+                        <a class="nav-item nav-link" href="${pageContext.request.contextPath}?command=${pageContext.request.getParameter("command")}&locale=ru_RU"><fmt:message key="header.common.ru.button"/></a>
+                        <a class="nav-item nav-link" href="#"></a>
+                        <a class="nav-item nav-link" href="Controller?command=GO_TO_REGISTRATION_PAGE"><fmt:message key="header.common.sign_up"/></a>
+                        <a class="nav-item nav-link" class="text-right" href="Controller?command=GO_TO_LOGIN_PAGE"><fmt:message key="header.common.login"/></a>
+                        <a class="nav-item nav-link" class="text-right" href="Controller?command=CLOSE_GUEST_SESSION"><fmt:message key="header.common.exit"/></a>
 
-<%--<div class="row">--%>
-<%--    <form action="Controller" method="post">--%>
-<%--        <input type="hidden" name="locale" value="ru_RU"/>--%>
-<%--        <input type="submit" value=<fmt:message--%>
-<%--                    key="header.common.ru.button"/>/>--%>
-<%--    </form>___________--%>
-<%--    <form action="Controller" method="post">--%>
-<%--        <input type="hidden" name="locale" value="en_EN"/>--%>
-<%--        <input type="submit" value=<fmt:message--%>
-<%--                key="header.common.en.button"/>/>--%>
-<%--    </form>--%>
-<%--        <h5>--------------------<fmt:message key="header.common.home"/></h5>--%>
-<%--    <c:out value="${message}"/>--%>
+                    </div>
+                </div>
+            </nav>
+        </header>
+    </c:otherwise>
+</c:choose>
 
 
-</div>
+
 

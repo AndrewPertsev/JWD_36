@@ -1,6 +1,8 @@
 package by.epam.heritage.ap.service.validator;
 
 
+import javax.xml.validation.Validator;
+
 public final class ValidatorFactory {
 
     private final static ValidatorFactory instance = new ValidatorFactory();
@@ -8,6 +10,10 @@ public final class ValidatorFactory {
     private ApartmentValidator apartmentValidator = new ApartmentValidator();
     private RequestValidator requestValidator = new RequestValidator();
     private GuestValidator guestValidator = new GuestValidator();
+
+
+
+    private OfferStatusValidator offerValidator = new OfferStatusValidator();
 
 
     private ValidatorFactory() {
@@ -29,4 +35,6 @@ public final class ValidatorFactory {
     public GuestValidator getGuestValidator() {
         return guestValidator;
     }
+
+    public OfferStatusValidator getOfferValidator() { return offerValidator; }
 }

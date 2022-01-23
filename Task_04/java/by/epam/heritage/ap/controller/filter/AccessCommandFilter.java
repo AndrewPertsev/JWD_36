@@ -32,22 +32,32 @@ public class AccessCommandFilter implements Filter {
         commandAccess.put(LOG_IN, 0);
         commandAccess.put(REGISTRATION, 0);
         commandAccess.put(GO_TO_MAIN_PAGE, 0);
-        commandAccess.put(SWITCH_LANGUAGE, 0);
         commandAccess.put(GO_TO_HOME_PAGE, 0);
         commandAccess.put(GO_TO_LOGIN_PAGE, 0);
         commandAccess.put(GO_TO_REGISTRATION_PAGE, 0);
         commandAccess.put(REQUEST, 1);
+        commandAccess.put(CLOSE_GUEST_SESSION, 1);
         commandAccess.put(GO_TO_REQUEST_PAGE, 1);
         commandAccess.put(GO_TO_GUEST_ROOM_PAGE, 1);
         commandAccess.put(OFFER, 2);
+        commandAccess.put(UPDATE_GUEST, 2);
+        commandAccess.put(DELETE_REQUEST, 2);
+        commandAccess.put(ADD_APARTMENT, 2);
+        commandAccess.put(UPDATE_REQUEST, 2);
+        commandAccess.put(SHOW_GUEST_DATA, 2);
+        commandAccess.put(DELETE_APARTMENT, 2);
+        commandAccess.put(UPDATE_APARTMENT, 2);
         commandAccess.put(PUSH_OFFER_TO_USER, 2);
-        commandAccess.put(SET_OFFER_PAID_STATUS, 2);
-        commandAccess.put(SET_OFFER_CLOSED_STATUS, 2);
-        commandAccess.put(RESERVE_CONFIRMED_DAYS, 2);
+        commandAccess.put(UPDATE_OFFER_STATUS, 2);
         commandAccess.put(GO_TO_OFFER_PROJECT_PAGE, 2);
         commandAccess.put(GO_TO_OFFER_MANAGEMENT_PAGE, 2);
+        commandAccess.put(GO_TO_GUEST_MANAGEMENT_PAGE, 2);
         commandAccess.put(GO_TO_REQUEST_MANAGEMENT_PAGE, 2);
+        commandAccess.put(GO_TO_TIMESHEET_MANAGEMENT_PAGE, 2);
         commandAccess.put(GO_TO_APARTMENT_MANAGEMENT_PAGE, 2);
+        commandAccess.put(FIND_REQUESTS_UNRESPONDED_STATUS_ONLY, 2);
+
+
     }
 
     @Override
