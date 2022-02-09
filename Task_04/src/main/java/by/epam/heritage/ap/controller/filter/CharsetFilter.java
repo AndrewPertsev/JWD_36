@@ -11,17 +11,12 @@ import static by.epam.heritage.ap.controller.ConstantsParametersAndAttributes.PA
 
 
 public class CharsetFilter implements Filter {
-    //    private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(CharsetFilter.class);
     private static final Logger logger = LogManager.getLogger(CharsetFilter.class);
 
     private String encoding;
     private ServletContext context;
 
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-
-        logger.info("charset filter ");/////////////////////////////
-        logger.error("errr charset filter");//////////////////////////////
-
 
         request.setCharacterEncoding(encoding);
         chain.doFilter(request, response);

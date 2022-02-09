@@ -47,7 +47,7 @@
                 <input type="text" name="login" value="" id="login" class="form-control  badge-pill setMargin" placeholder=
                 <fmt:message key="header.common.login"/> required autofocus>
                 <br>
-                <input type="text" name="password" value="" id="password" class="form-control  badge-pill setMargin" placeholder=
+                <input type="password" name="password" value="" id="password" class="form-control  badge-pill setMargin" placeholder=
                 <fmt:message key="registration.password"/> required autofocus>
                 <br>
                 <input type="password" name="password2" value="" id="password2" class="form-control badge-pill setMargin"

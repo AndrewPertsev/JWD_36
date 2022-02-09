@@ -58,10 +58,10 @@
     <location>/WEB-INF/view/error/error404.jsp</location>
   </error-page>
 
-<!--  <error-page>-->
-<!--    <error-code>500</error-code>-->
-<!--    <location>/WEB-INF/view/error/error500.jsp</location>-->
-<!--  </error-page>-->
+  <error-page>
+    <error-code>500</error-code>
+    <location>/WEB-INF/view/error/error500.jsp</location>
+  </error-page>
 
 <!--  <listener>-->
 <!--    <listener-class>by.epam.heritage.ap.controller.filter.ContextListener</listener-class>-->

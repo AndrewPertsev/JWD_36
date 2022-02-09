@@ -26,7 +26,7 @@ public final class ValidatorConstants {
     public static final String PATTERN_EMAIL = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$";
     public static final String PATTERN_NAME = "^[\\wа-яА-Я]{2,30}$";
     public static final String PATTERN_PASSPORT_NUMBER = "^[\\d]{6,12}$";
-    public static final String PATTERN_PASSWORD = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{3,16}$";//Minimum three characters, at least one letter, one number and one special character
+    public static final String PATTERN_PASSWORD = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{3,16}$";
     public static final String PATTERN_PHONE = "^[+]?[\\d]{6,16}$";
     public static final String PATTERN_PICTURE_PNG = "^(.){1,100}.png$";
 

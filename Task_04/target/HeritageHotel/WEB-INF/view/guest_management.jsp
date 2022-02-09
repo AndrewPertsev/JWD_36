@@ -295,7 +295,7 @@
                         <button type="button" class="btn btn-outline-info  btn-sm badge-pill UPDATE_BTN"
                                 data-toggle="modal" data-target="#UPDATE_Element"><fmt:message
                                 key="button.commands.update"/>
-                                ${r.guestId} </button>
+                        </button>
                     </td>
 
                 </tr>

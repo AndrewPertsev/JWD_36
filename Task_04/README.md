@@ -1,11 +1,10 @@
-### Hotel booking.
+# Hotel booking.
 
-Application provides an opportunity to book apartment if you are guest, and eihter manage users requests if you are manager.
+Application provides an opportunity to book apartment if you are guest, and either manage users requests if you are manager.
 
-# Feature
-Available functionality depend on the user's role (guest, manager).Implemented layered architecture with design patterns are: Singelton, Command, Proxy, Factory, Builder.
+## Feature
+Available functionality depend on the user's role (guest, manager). Implemented layered architecture with design patterns are: Singelton, Command, Proxy, Factory, Builder.
 Used technologies : Maven, Tomcat, JSP, JSTL, MySQL, JDBC, jBCrypt, JUnit, Mockito.
-
 
 ## Guest:
 - Placing request with ability of choosing check-in date, check-out date, quantity persons, apartment category, transfer and menu.

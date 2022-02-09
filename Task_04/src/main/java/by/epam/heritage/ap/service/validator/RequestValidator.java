@@ -66,7 +66,7 @@ public final class RequestValidator implements Validable {
             return false;
         }
         if (endDate == null || endDate == "") {
-            logger.error("Service can't validate start date ");
+            logger.error("Service can't validate null end date ");
             return false;
         }
 
